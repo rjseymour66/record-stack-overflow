@@ -46,10 +46,12 @@ app.use(router)
 
 // middleware route
 
-// TEST ROUTE
+// TEST ROUTE =======================================
 
-app.get('/', (req, res) => {
-  res.json({ message: 'API works!' })
+app.get('/params', (req, res) => {
+  res.json({ message : 'Hello World!', fullName: req.query})
+  console.log(JSON.stringify(req.query));
+  
 });
 
 // Server ===========================================
