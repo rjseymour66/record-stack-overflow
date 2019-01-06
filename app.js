@@ -1,6 +1,8 @@
 import express from 'express';
 import mongoose, { Collection } from 'mongoose';
 import bodyParser from 'body-parser';
+import jsonwebtoken from 'jsonwebtoken';
+import User from './src/models/userModel';
 import RateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -27,6 +29,20 @@ app.use(helmet());
 // body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+
+// JWT setup
+app.use((req, res, next) => {
+  if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
+      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'RESTFULAPIs', (err, decode) => {
+          if(err) req.user = undefined;
+          req.user = decode;
+          next();
+      });
+  } else {
+      req.user = undefined;
+      next();
+  }
+});
 
 // rate limit setup
 const limiter = new RateLimit({

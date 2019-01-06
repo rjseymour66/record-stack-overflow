@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
-const RecordSchema = new Schema ({
+export const RecordSchema = new Schema ({
   artist: {
     type: String,
     required: 'Enter the artist name'
@@ -32,7 +32,8 @@ const RecordSchema = new Schema ({
   },
   comments: {
     type: Array
-  },
-})
+  }
+});
 
-module.exports = mongoose.model('Record', RecordSchema)
+
+// module.exports = mongoose.model('Record', RecordSchema)

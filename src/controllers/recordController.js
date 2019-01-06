@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { RecordSchema } from '../models/recordModel';
 
+
 // require model
 const Record = mongoose.model('Record', RecordSchema);
 // const Record = require('./src/models/recordModel')
@@ -8,22 +9,14 @@ const Record = mongoose.model('Record', RecordSchema);
 
 
 export const createRecord = (req, res) => {
-  let record = new Record(req.body)
+  let record = new Record(req.body);
   record.save((err, data) => {
-    if(!req.body.artist) {
-      res.json({ error: 'artist is required' })
-    } else if (!req.body.title) {
-      res.json({ error: 'title is required' })
-    } else if (!req.body.genre) {
-      res.json({ error: 'genre is required' })
-    } else if (!req.body.price) {
-      res.json({ error: 'price is required' })
-    } else if (!req.body.condition) {
-      res.json({ error: 'condition is required '})
-    } else if (!req.body.location) {
-      res.json({ error: 'location is required' })
+    if (err) {
+      return res.status(400).send({
+        message: err
+      });
     } else {
-      res.json({message: 'Success - record created!', 'New Record Information': data})
+      return res.json({message: 'Success - record created!', 'New Record Information': data});
     }
   });
 };
