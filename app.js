@@ -11,12 +11,15 @@ import router from './src/routes/recordRoutes';
 
 // express server
 const app = express();
-const PORT = process.env.PORT || 4000;
 
 // CONNECT DB
 // =================================================================
 
-mongoose.connect('mongodb://localhost/record-stack-overflow', () => {
+const PORT = 4000;
+const URL = process.env.DATABASE_URL || 'mongod://localhost/record-stack-overflow'
+console.log(process.env.DATABASE_URL);
+
+mongoose.connect(URL, () => {
   console.log(`The database is connected!`);
 });
 
