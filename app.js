@@ -67,11 +67,11 @@ app.use(router)
 
 // TEST ROUTE =======================================
 
-app.get('/params', (req, res) => {
-  res.json({ message : 'Hello World!', fullName: req.query})
-  console.log(JSON.stringify(req.query));
+// app.get('/params', (req, res) => {
+//   res.json({ message : 'Hello World!', fullName: req.query})
+//   console.log(JSON.stringify(req.query));
   
-});
+// });
 
 // Server ===========================================
 
