@@ -29,8 +29,8 @@ router.post('/auth/register', register)
 router.post('/auth/login', login)
 
 // Home route
-// router.get('/', (req, res) => {
-//   res.render('home')
-// });
+router.get('/', (req, res) => {
+  res.render('home')
+});
 
 export default router;
