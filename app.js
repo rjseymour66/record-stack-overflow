@@ -26,6 +26,9 @@ mongoose.connect(URL, () => {
 // MIDDLEWARE
 // =================================================================
 
+// EJS
+app.set('view engine', 'ejs');
+
 // helmet setup
 app.use(helmet());
 
@@ -77,4 +80,9 @@ app.use(router)
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
+});
+
+
+app.get('/', (req, res) => {
+  res.render('home')
 });
