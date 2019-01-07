@@ -4,11 +4,7 @@
   "description": "REST API resume project",
   "main": "app.js",
   "scripts": {
-    "clean": "rm -rf build && mkdir build",
-    "build-babel": "babel -d ./build ./src -s",
-    "build": "npm run clean && npm run build-babel",
-    "start": "npm run build && node ./build/index.js",
-    "dev": "nodemon src/index.js --exec babel-node -e js"
+    "dev": "nodemon app.js --exec babel-node -e js"
   },
   "author": "Ryan Seymour",
   "license": "ISC",

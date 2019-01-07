@@ -2,11 +2,11 @@ import express from 'express';
 import mongoose, { Collection } from 'mongoose';
 import bodyParser from 'body-parser';
 import jsonwebtoken from 'jsonwebtoken';
-import User from './models/userModel';
+import User from './src/models/userModel';
 import RateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import router from './routes/recordRoutes';
+import router from './src/routes/recordRoutes';
 
 
 // express server
@@ -15,7 +15,7 @@ const app = express();
 // CONNECT DB
 // =================================================================
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 const URL = process.env.DATABASE_URL || 'mongod://localhost/record-stack-overflow'
 console.log(process.env.DATABASE_URL);
 
