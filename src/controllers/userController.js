@@ -27,10 +27,10 @@ export const login = (req, res) => {
   }, (err, user) => {
     if (err) throw err;
     if (!user) {
-      res.status(401).json({ message: 'Authentication failed. No user found!' });
+      res.status(401).json({ message: 'Authentication failed. No user found.' });
     } else if (user) {
       if (!user.comparePassword(req.body.password, user.hashPassword)) {
-        res.status(401).json({ message: 'Authentication failed. Wrong password!' });
+        res.status(401).json({ message: 'Authentication failed. Wrong password.' });
       } else {
         return res.json({ token: jwt.sign({ email: user.email, username: user.username, _id: user.id }, 'BLUESBREAKERs') });
       }

@@ -16,7 +16,7 @@ const app = express();
 // =================================================================
 
 const PORT = process.env.PORT || 4000;
-const URL = process.env.DATABASE_URL || 'mongod://localhost/record-stack-overflow'
+const URL = process.env.DATABASE_URL || 'mongodb://localhost/record-stack-overflow'
 console.log(process.env.DATABASE_URL);
 
 mongoose.connect(URL, () => {
