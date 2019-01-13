@@ -21,6 +21,7 @@ export const register = (req, res) => {
 
 };
 
+
 export const login = (req, res) => {
   User.findOne({
     email: req.body.email

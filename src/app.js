@@ -6,7 +6,8 @@ import User from './models/userModel';
 import RateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import router from './routes/recordRoutes';
+import router from './routes/routes';
+
 
 
 // express server

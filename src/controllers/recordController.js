@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import { RecordSchema } from '../models/recordModel';
+import { OrderSchema } from '../models/orderModel';
 
 
 // require model
 const Record = mongoose.model('Record', RecordSchema);
-// const Record = require('./src/models/recordModel')
 
 
 
@@ -21,32 +21,51 @@ export const createRecord = (req, res) => {
   });
 };
 
+
 export const getAllRecords = (req, res) => {
-  Record.find((err, data) => {
+  const limit = parseInt(req.query.limit)
+  const artist = req.query.artist
+
+  if(artist){
+    Record.find({artist: artist}, (err, data) => {
+      if (err) {
+        res.status(400).json({ message: "Request failed."})
+      } else {
+        res.json(data)
+      }
+    }).limit(limit);
+  } else {
+    Record.find((err, data) => {
+      if (err) {
+        res.status(400).json({ message: "Request failed."})
+      } else {
+        res.json(data)
+      }
+    }).limit(limit);
+  }
+}
+
+
+
+export const updateRecordById = (req, res) => {
+  const id = {_id: req.params.record_id};
+  const updatedInfo = req.body;
+  Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
     if (err) {
-      res.send(err) 
+      res.status(404).json({ message: "Record not found. Check record id."})
     } else {
       res.json(data)
     }
   });
 };
 
-export const updateRecordById = (req, res) => {
-  const id = {_id: req.params.record_id};
-  const updatedInfo = req.body;
-  Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, contact) => {
-    if (err) {
-      res.send(err)
-    } else {
-      res.json(contact)
-    }
-  });
-};
+
+
 
 export const deleteRecord = (req, res) => {
   Record.remove({_id: req.params.record_id}, (err, data) => {
     if (err) {
-      res.send(err)
+      res.status(404).json({ message: "Record not found. Check record id."})
     } else {
       res.json({message: 'Successfully deleted!'})
     }
@@ -64,40 +83,23 @@ export const getRecordsByArtist = (req, res) => {
   });
 }
 
-export const recordsByLocation = (req, res) => {
-  Record.find({location: req.params.location}, (err, data) => {
-    if (err) {
-      res.send(err) 
-    } else {
-      res.json(data)
-    }
-  });
-};
-
-export const getRecordsByArtistAndLocation = (req, res) => {
-  Record.find({artist: req.params.artist, location: req.params.location}, (err,data) => {
-    if (err) {
-      res.send(err) 
-    } else {
-      res.json(data)
-    }
-  });
-}
-
 export const getByGenre = (req, res) => {
-  Record.find({genre: req.params.genre}, (err, data) => {
+  const limit = parseInt(req.query.limit)
+  const genre = req.query.genre
+
+  Record.find({genre: genre}, (err, data) => {
     if (err) {
-      res.send(err) 
+      res.status(400).json({ message: "Genre not found."}) 
     } else {
       res.json(data)
     }
-  });
+  }).limit(limit);
 };
 
 export const getGenreAndLocation = (req, res) => {
   Record.find({genre: req.params.genre, location: req.params.location}, (err,data) => {
     if (err) {
-      res.send(err) 
+      res.status(400).json({ message: "Genre or Location not found."}) 
     } else {
       res.json(data)
     }
