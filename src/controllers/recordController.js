@@ -51,8 +51,6 @@ export const updateRecordById = (req, res) => {
   });
 };
 
-
-
 // DELETE RECORD BY ID
 export const deleteRecord = (req, res) => {
   Record.remove({_id: req.params.record_id}, (err, data) => {

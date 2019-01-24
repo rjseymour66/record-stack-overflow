@@ -4,18 +4,24 @@ import { RecordSchema } from '../models/recordModel';
 // require model
 const Record = mongoose.model('Record', RecordSchema);
 
-export const recordsByLocation = (req, res) => {
-  const limit = parseInt(req.query.limit)
-  const location = req.query.location
 
-  Record.find({location: location}, (err, data) => {
+// RETRIEVE / GET RECORDS BY LOCATION
+export const getRecordsByLocation = (req, res) => {
+  const limit = parseInt(req.query.limit)
+  const artistSort = {artist: 1}
+  const offset = parseInt(req.query.offset)
+
+  Record.find({location: req.params.location}, (err, data) => {
     if (err) {
-      res.status(400).json({ message: "Invalid location."}) 
+      res.send(err) 
     } else {
       res.json(data)
     }
-  }).limit(limit);
-};
+  }).limit(limit)
+    .sort(artistSort)
+    .skip(offset)
+}
+
 
 export const getRecordsByArtistAndLocation = (req, res) => {
   Record.find({artist: req.params.artist, location: req.params.location}, (err,data) => {

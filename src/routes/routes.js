@@ -9,7 +9,7 @@ import {
   getGenreAndLocation,
 } from '../controllers/recordController';
 import { login, register, loginRequired } from '../controllers/userController';
-import { recordsByLocation, getRecordsByArtistAndLocation } from '../controllers/locationController';
+import { getRecordsByLocation, getRecordsByArtistAndLocation } from '../controllers/locationController';
 import {
   createOrder,
   getAllOrders,
@@ -26,12 +26,16 @@ router.get('/api/records', loginRequired, getAllRecords); // DONE
 router.put('/api/records/:record_id', loginRequired, updateRecordById) // DONE
 router.delete('/api/records/:record_id', loginRequired, deleteRecord) // DONE
 
+// LOCATION RECORD ROUTES
+router.get('/api/records/locations/:location', loginRequired, getRecordsByLocation)
+
+
 router.get('/api/records/artist/:artist', loginRequired, getRecordsByArtist)
 router.get('/api/records/genre', loginRequired, getByGenre)
 router.get('/api/records/genre/:genre/location/:location', loginRequired, getGenreAndLocation)
 
 // LOCATION ROUTES
-router.get('/api/location', loginRequired, recordsByLocation)
+
 router.get('/api/records/artist/:artist/location/:location', loginRequired, getRecordsByArtistAndLocation)
 
 // ORDER ROUTES
