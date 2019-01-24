@@ -39,7 +39,7 @@ export const getAllRecords = (req, res) => {
     .skip(offset)
 }  
 
-
+// UPDATE / PUT BY ID
 export const updateRecordById = (req, res) => {
   const id = {_id: req.params.record_id};
   const updatedInfo = req.body;
