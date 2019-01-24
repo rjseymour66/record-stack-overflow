@@ -7,6 +7,7 @@ import { OrderSchema } from '../models/orderModel';
 const Record = mongoose.model('Record', RecordSchema);
 
 
+// CREATE / GET ALL RECORDS
 
 export const createRecord = (req, res) => {
   let record = new Record(req.body);
@@ -25,23 +26,29 @@ export const createRecord = (req, res) => {
 export const getAllRecords = (req, res) => {
   const limit = parseInt(req.query.limit)
   const artist = req.query.artist
+  const artistSort = {artist: 1}
+  const offset = parseInt(req.query.offset)
 
   if(artist){
     Record.find({artist: artist}, (err, data) => {
       if (err) {
-        res.status(400).json({ message: "Request failed."})
+        res.status(400).json({ message: "Request failed." })
       } else {
         res.json(data)
       }
-    }).limit(limit);
+    }).limit(limit)
+      .sort(artistSort)
+      .skip(offset)
   } else {
     Record.find((err, data) => {
       if (err) {
-        res.status(400).json({ message: "Request failed."})
+        res.status(400).json({ message: "Request failed." })
       } else {
         res.json(data)
       }
-    }).limit(limit);
+    }).limit(limit)
+      .sort(artistSort)
+      .skip(offset)
   }
 }
 

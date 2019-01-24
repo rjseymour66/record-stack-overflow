@@ -21,7 +21,7 @@ const router = express.Router();
 
 
 // RECORD ROUTES
-router.post('/api/records', loginRequired, createRecord); 
+router.post('/api/records', loginRequired, createRecord); // DONE
 router.get('/api/records', loginRequired, getAllRecords);      
 router.put('/api/records/:record_id', loginRequired, updateRecordById)
 router.delete('/api/records/:record_id', loginRequired, deleteRecord)
