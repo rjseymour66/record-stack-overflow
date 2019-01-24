@@ -24,7 +24,7 @@ const router = express.Router();
 router.post('/api/records', loginRequired, createRecord); // DONE
 router.get('/api/records', loginRequired, getAllRecords); // DONE 
 router.put('/api/records/:record_id', loginRequired, updateRecordById) // DONE
-router.delete('/api/records/:record_id', loginRequired, deleteRecord)
+router.delete('/api/records/:record_id', loginRequired, deleteRecord) // DONE
 
 router.get('/api/records/artist/:artist', loginRequired, getRecordsByArtist)
 router.get('/api/records/genre', loginRequired, getByGenre)
