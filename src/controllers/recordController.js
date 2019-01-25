@@ -16,7 +16,7 @@ export const createRecord = (req, res) => {
         message: err
       });
     } else {
-      return res.json({message: 'Success - record created!', 'New Record Information': data});
+      return res.json({ message: 'Success - record created!', 'New Record Information': data });
     }
   });
 };
@@ -24,27 +24,74 @@ export const createRecord = (req, res) => {
 // RETRIEVE / GET ALL RECORDS
 export const getAllRecords = (req, res) => {
   const limit = parseInt(req.query.limit)
-  const artistSort = {artist: 1}
+  const artistSort = { artist: 1 }
   const offset = parseInt(req.query.offset)
+  const artist = req.query.artist
+  const location = req.query.location
 
-  Record.find((err, data) => {
-    if (err) {
-      res.status(400).json({ message: "Request failed." })
-    } else {
-      res.json(data)
-    }
-  }).limit(limit)
-    .sort(artistSort)
-    .skip(offset)
-}  
+  if (artist && location) {
+    Record.find({ $and: [{ artist: artist }, { location: location }] })
+      .limit(limit)
+      .sort(artistSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ message: "Request failed." })
+        } else {
+          res.json(data)
+        }
+      })
+  } else if (location) {
+    Record.find({ location: location })
+      .limit(limit)
+      .sort(artistSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ message: "Request failed." })
+        } else {
+          res.json(data)
+        }
+      })
+
+  } else if (artist) {
+    Record.find({ artist: artist })
+      .limit(limit)
+      .sort(artistSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ message: "Request failed." })
+        } else {
+          res.json(data)
+        }
+      })
+  } else {
+    Record.find()
+      .limit(limit)
+      .sort(artistSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ message: "Request failed." })
+        } else {
+          res.json(data)
+        }
+      })
+  }
+}
+
+
+
+
 
 // UPDATE / PUT BY ID
 export const updateRecordById = (req, res) => {
-  const id = {_id: req.params.record_id};
+  const id = { _id: req.params.record_id };
   const updatedInfo = req.body;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
     if (err) {
-      res.status(404).json({ message: "Record not found. Check record id."})
+      res.status(404).json({ message: "Record not found. Check record id." })
     } else {
       res.json(data)
     }
@@ -53,35 +100,25 @@ export const updateRecordById = (req, res) => {
 
 // DELETE RECORD BY ID
 export const deleteRecord = (req, res) => {
-  Record.remove({_id: req.params.record_id}, (err, data) => {
+  Record.remove({ _id: req.params.record_id }, (err, data) => {
     if (err) {
-      res.status(404).json({ message: "Record not found. Check record id."})
+      res.status(404).json({ message: "Record not found. Check record id." })
     } else {
-      res.json({message: 'Successfully deleted!'})
+      res.json({ message: 'Successfully deleted!' })
     }
   });
 };
 
 
 
-export const getRecordsByArtist = (req, res) => {
-
-  Record.find({artist: req.params.artist}, (err, data) => {
-    if (err) {
-      res.send(err) 
-    } else {
-      res.json(data)
-    }
-  });
-}
 
 export const getByGenre = (req, res) => {
   const limit = parseInt(req.query.limit)
   const genre = req.query.genre
 
-  Record.find({genre: genre}, (err, data) => {
+  Record.find({ genre: genre }, (err, data) => {
     if (err) {
-      res.status(400).json({ message: "Genre not found."}) 
+      res.status(400).json({ message: "Genre not found." })
     } else {
       res.json(data)
     }
@@ -89,9 +126,9 @@ export const getByGenre = (req, res) => {
 };
 
 export const getGenreAndLocation = (req, res) => {
-  Record.find({genre: req.params.genre, location: req.params.location}, (err,data) => {
+  Record.find({ genre: req.params.genre, location: req.params.location }, (err, data) => {
     if (err) {
-      res.status(400).json({ message: "Genre or Location not found."}) 
+      res.status(400).json({ message: "Genre or Location not found." })
     } else {
       res.json(data)
     }
