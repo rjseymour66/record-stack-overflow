@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 const Schema = mongoose.Schema
 
+let date = new Date();
+
+
 export const RecordSchema = new Schema ({
   available: {
     type: Boolean,
@@ -13,10 +16,6 @@ export const RecordSchema = new Schema ({
   title: {
     type: String,
     required: 'Enter the album title'
-  },
-  genre: {
-    type: String,
-    required: 'Enter the genre'
   },
   price: {
     type: String,

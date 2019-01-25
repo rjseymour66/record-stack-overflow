@@ -102,9 +102,9 @@ export const updateRecordById = (req, res) => {
 export const deleteRecord = (req, res) => {
   Record.remove({ _id: req.params.record_id }, (err, data) => {
     if (err) {
-      res.status(404).json({ message: "Record not found. Check record id." })
+      res.status(404).json({ ERROR: "Record not found. Check record id." })
     } else {
-      res.json({ message: 'Successfully deleted!' })
+      res.json({ SUCCESS: 'Record object deleted' })
     }
   });
 };

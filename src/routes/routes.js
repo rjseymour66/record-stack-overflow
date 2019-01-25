@@ -8,6 +8,7 @@ import {
 import { login, register, loginRequired } from '../controllers/userController';
 import {
   createOrder,
+  getOrder,
   getAllOrders,
   updateOrderById,
   deleteOrder
@@ -24,10 +25,11 @@ router.delete('/api/records/:record_id', loginRequired, deleteRecord) // DONE
 
 
 // ORDER ROUTES
-router.post('/api/orders', loginRequired, createOrder)
-router.get('/api/orders', loginRequired, getAllOrders) 
-router.put('/api/orders/:order_id', loginRequired, updateOrderById)
-router.delete('/api/orders/:order_id', loginRequired, deleteOrder)
+router.post('/api/orders', loginRequired, createOrder) // DONE
+router.get('/api/orders/:order_id', loginRequired, getOrder) // DONE
+router.get('/api/orders', loginRequired, getAllOrders) // DONE
+router.put('/api/orders/:order_id', loginRequired, updateOrderById) // DONE
+router.delete('/api/orders/:order_id', loginRequired, deleteOrder) // DONE
 
 
 // AUTHORIZATION ROUTES

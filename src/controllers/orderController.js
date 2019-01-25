@@ -14,7 +14,7 @@ const Record = mongoose.model('Record', RecordSchema);
       // create order with record id as album_id
 
 
-// create an order
+// CREATE / POST NEW ORDER
 export const createOrder = (req, res) => {
   let order = new Order(req.body);
   order.save((err, data) => {
@@ -23,28 +23,65 @@ export const createOrder = (req, res) => {
         message: err
       });
     } else {
-      return res.json({message: 'Success - order created!', 'New Order Information': data});
+      return res.json({SUCCESS: 'Order created!', 'New Order Information': data});
     }
   });
 };
 
+// RETRIEVE / GET ONE ORDER
+export const getOrder = (req, res) => {
+  const id = req.params.order_id
 
-// get all orders - get orders
+  Order.findById(id)
+  .exec((err, order) => {
+    if(err) {
+      res.status(400).json({ ERROR: "Order not found" })
+    } else {
+      res.json(order)
+    }
+  })
+};
+
+
+// RETRIEVE / GET ALL ORDERS
 export const getAllOrders = (req, res) => {
   const limit = parseInt(req.query.limit)
+  const offset = parseInt(req.query.offset)
+  const lastName = req.query.lastName
+  const lastNameSort = { lastName : 1 }
 
-    Order.find((err, data) => {
-      if (err) {
-        res.status(400).json({ message: "Request failed."})
-      } else {
-        res.json(data)
-      }
-    }).limit(limit);
+    if(lastName) {
+      Order.find({ customer_lastName : lastName })
+      .limit(limit)
+      .sort(lastNameSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ ERROR: "Request failed"})
+        } else {
+          res.json(data)
+        }
+      });
+
+    } else {
+      Order.find()
+      .limit(limit)
+      .sort(lastNameSort)
+      .skip(offset)
+      .exec((err, data) => {
+        if (err) {
+          res.status(400).json({ ERROR: "Request failed."})
+        } else {
+          res.json(data)
+        }
+      });
+
+    }
   }
 
   // Update an order
   export const updateOrderById = (req, res) => {
-    const id = {_id: req.params.order_id};
+    const id = req.params.order_id
     const updatedInfo = req.body;
     Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
       if (err) {
@@ -58,11 +95,11 @@ export const getAllOrders = (req, res) => {
 // delete an order
 
 export const deleteOrder = (req, res) => {
-  Order.remove({_id: req.params.order_id}, (err, data) => {
+  Order.remove({ _id: req.params.order_id }, (err, data) => {
     if (err) {
-      res.status(404).json({ message: "Order not found. Check order id."})
+      res.status(404).json({ ERROR: "Order not found. Check order id."})
     } else {
-      res.json({message: 'Successfully deleted!'})
+      res.json({SUCCESS: 'Order object deleted'})
     }
   });
 };

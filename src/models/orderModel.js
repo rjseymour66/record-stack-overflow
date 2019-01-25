@@ -6,7 +6,7 @@ export const OrderSchema = new Schema ({
     type: String,
     default: 'Order'
   },
-  album_id: {
+  record_id: {
     type: String,
     required: 'Enter the album id'
   },
@@ -22,19 +22,19 @@ export const OrderSchema = new Schema ({
     type: String,
     required: 'Enter the customer last name'
   },
-  customer_street: {
+  shipping_street: {
     type: String,
     required: 'Enter the customer street address'
   },
-  customer_city: {
+  shipping_city: {
     type: String,
     required: 'Enter the customer city'
   },
-  customer_state: {
+  shipping_state: {
     type: String,
     required: 'Enter the customer state'
   },
-  customer_zip: {
+  shipping_zip: {
     type: String,
     required: 'Enter the customer zip code'
   },
