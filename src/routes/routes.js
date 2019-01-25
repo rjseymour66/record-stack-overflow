@@ -4,8 +4,6 @@ import {
   getAllRecords,
   updateRecordById,
   deleteRecord,
-  getByGenre,
-  getGenreAndLocation,
 } from '../controllers/recordController';
 import { login, register, loginRequired } from '../controllers/userController';
 import {

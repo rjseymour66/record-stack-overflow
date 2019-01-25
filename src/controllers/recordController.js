@@ -108,31 +108,3 @@ export const deleteRecord = (req, res) => {
     }
   });
 };
-
-
-
-
-export const getByGenre = (req, res) => {
-  const limit = parseInt(req.query.limit)
-  const genre = req.query.genre
-
-  Record.find({ genre: genre }, (err, data) => {
-    if (err) {
-      res.status(400).json({ message: "Genre not found." })
-    } else {
-      res.json(data)
-    }
-  }).limit(limit);
-};
-
-export const getGenreAndLocation = (req, res) => {
-  Record.find({ genre: req.params.genre, location: req.params.location }, (err, data) => {
-    if (err) {
-      res.status(400).json({ message: "Genre or Location not found." })
-    } else {
-      res.json(data)
-    }
-  });
-}
-
-
