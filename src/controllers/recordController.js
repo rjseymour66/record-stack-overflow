@@ -12,11 +12,9 @@ export const createRecord = (req, res) => {
   let record = new Record(req.body);
   record.save((err, data) => {
     if (err) {
-      return res.status(400).send({
-        message: err
-      });
+      return res.status(400).json({ ERROR: "Request failed." })
     } else {
-      return res.json({ message: 'Success - record created!', 'New Record Information': data });
+      return res.json({ SUCCESS: 'Record created', 'New Record Information': data });
     }
   });
 };
@@ -36,7 +34,7 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ message: "Request failed." })
+          res.status(400).json({ ERROR: "Request failed" })
         } else {
           res.json(data)
         }
@@ -48,7 +46,7 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ message: "Request failed." })
+          res.status(400).json({ ERROR: "Request failed" })
         } else {
           res.json(data)
         }
@@ -61,7 +59,7 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ message: "Request failed." })
+          res.status(400).json({ ERROR: "Request failed" })
         } else {
           res.json(data)
         }
@@ -73,7 +71,7 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ message: "Request failed." })
+          res.status(400).json({ ERROR: "Request failed" })
         } else {
           res.json(data)
         }
@@ -91,7 +89,7 @@ export const updateRecordById = (req, res) => {
   const updatedInfo = req.body;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
     if (err) {
-      res.status(404).json({ message: "Record not found. Check record id." })
+      res.status(404).json({ ERROR: "Record object not found. Check record id." })
     } else {
       res.json(data)
     }

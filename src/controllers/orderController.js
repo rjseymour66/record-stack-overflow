@@ -14,6 +14,7 @@ const Record = mongoose.model('Record', RecordSchema);
       // create order with record id as album_id
 
 
+
 // CREATE / POST NEW ORDER
 export const createOrder = (req, res) => {
   let order = new Order(req.body);
@@ -27,6 +28,20 @@ export const createOrder = (req, res) => {
     }
   });
 };
+
+// MAKE RECORD NOT AVAILABLE
+// export const falseAvailable = (req, res) => {
+//   const id = createOrder.order.body.record_id
+//   const updatedInfo = { available : false }
+//   Order.findOneAndUpdate(id, updatedInfo)
+//   .exec((err, data) => {
+//     if (err) {
+//       res.status(404).json({ message: "Order not found. Check order id."})
+//     } else {
+//       res.json(data)
+//     }
+//   })
+// }
 
 // RETRIEVE / GET ONE ORDER
 export const getOrder = (req, res) => {
