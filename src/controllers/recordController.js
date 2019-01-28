@@ -89,7 +89,7 @@ export const updateRecordById = (req, res) => {
   const updatedInfo = req.body;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
     if (err) {
-      res.status(404).json({ ERROR: "Record object not found. Check record id." })
+      res.status(404).json({ ERROR: "Record not found. Check record id." })
     } else {
       res.json(data)
     }

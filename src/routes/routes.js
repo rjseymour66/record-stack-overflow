@@ -12,28 +12,30 @@ import {
   getAllOrders,
   updateOrderById,
   deleteOrder,
-  
- } from '../controllers/orderController';
+  falseAvailable
+} from '../controllers/orderController';
 
 const router = express.Router();
 
 
 // RECORD ROUTES
-router.post('/api/records', loginRequired, createRecord); // DONE
-router.get('/api/records', loginRequired, getAllRecords); // DONE 
-router.put('/api/records/:record_id', loginRequired, updateRecordById) // DONE
-router.delete('/api/records/:record_id', loginRequired, deleteRecord) // DONE
+router.post('/api/v1/records', loginRequired, createRecord); // DONE
+router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
+router.put('/api/v1/records/:record_id', loginRequired, updateRecordById) // DONE
+router.delete('/api/v1/records/:record_id', loginRequired, deleteRecord) // DONE
 
 
 // ORDER ROUTES
-router.post('/api/orders', loginRequired, createOrder) // DONE
-router.get('/api/orders/:order_id', loginRequired, getOrder) // DONE
-router.get('/api/orders', loginRequired, getAllOrders) // DONE
-router.put('/api/orders/:order_id', loginRequired, updateOrderById) // DONE
-router.delete('/api/orders/:order_id', loginRequired, deleteOrder) // DONE
+router.post('/api/v1/orders', loginRequired, createOrder)// DONE
+router.get('/api/v1/orders/:order_id', loginRequired, getOrder) // DONE
+router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
+router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE
+router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE
+
+// USER ROUTES
 
 
-// AUTHORIZATION ROUTES
+// AUTHORIZATION ROUTES / USER ROUTES
 router.post('/auth/register', register)
 router.post('/auth/login', login)
 

@@ -36,12 +36,13 @@ export const createOrder = (req, res) => {
 //   Order.findOneAndUpdate(id, updatedInfo)
 //   .exec((err, data) => {
 //     if (err) {
-//       res.status(404).json({ message: "Order not found. Check order id."})
+//       res.status(404).json({ ERROR: "Order not found. Check order id."})
 //     } else {
 //       res.json(data)
 //     }
 //   })
 // }
+
 
 // RETRIEVE / GET ONE ORDER
 export const getOrder = (req, res) => {
