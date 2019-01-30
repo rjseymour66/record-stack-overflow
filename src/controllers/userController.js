@@ -33,7 +33,7 @@ export const login = (req, res) => {
       if (!user.comparePassword(req.body.password, user.hashPassword)) {
         res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
       } else {
-        return res.json({ token: jwt.sign({ email: user.email, username: user.username, _id: user.id }, 'BLUESBREAKERs') });
+        return res.json({ token: jwt.sign({ email: user.email, username: user.username, _id: user.id }, 'FAKE PWORD') });
       }
     }
   });
@@ -46,6 +46,7 @@ export const loginRequired = (req, res, next) => {
     return res.status(401).json({ ERROR: 'Unauthorized user' });
   }
 };
+<<<<<<< HEAD
 
 // CREATE / REGISTER IS SAME AS CREATE
 
@@ -57,3 +58,5 @@ export const loginRequired = (req, res, next) => {
 
 // DELETE / DELETE USER ACCOUNT
   // delete account to get new API key
+=======
+>>>>>>> da43ef651e067242ea7ad5a6b67b031587b12420

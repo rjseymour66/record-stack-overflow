@@ -40,7 +40,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // JWT setup
 app.use((req, res, next) => {
   if (req.headers && req.headers.authorization && req.headers.authorization.split(' ')[0] === 'JWT') {
-      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'BLUESBREAKERs', (err, decode) => {
+      jsonwebtoken.verify(req.headers.authorization.split(' ')[1], 'FAKE PWORD', (err, decode) => {
           if(err) req.user = undefined;
           req.user = decode;
           next();
