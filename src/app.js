@@ -7,6 +7,7 @@ import RateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import router from './routes/routes';
+import './config/config';
 
 
 
@@ -16,8 +17,8 @@ const app = express();
 // CONNECT DB
 // =================================================================
 
-const PORT = process.env.PORT || 4000;
-const URL = process.env.DATABASE_URL || 'mongodb://localhost/record-stack-overflow'
+const PORT = process.env.PORT// || 4000;
+const URL = process.env.DATABASE_URL// || 'mongodb://localhost/record-stack-overflow'
 
 mongoose.connect(URL, () => {
   console.log(`The database is connected!`);
