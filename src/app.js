@@ -18,7 +18,6 @@ const app = express();
 
 const PORT = process.env.PORT || 4000;
 const URL = process.env.DATABASE_URL || 'mongodb://localhost/record-stack-overflow'
-console.log(process.env.DATABASE_URL);
 
 mongoose.connect(URL, () => {
   console.log(`The database is connected!`);
@@ -26,6 +25,12 @@ mongoose.connect(URL, () => {
 
 // MIDDLEWARE
 // =================================================================
+
+app.use((req, res, next) => {
+  let now = new Date().toString();
+  let log = `${now}: ${req.method} ${req.url}`
+  next();
+});
 
 // EJS
 app.set('view engine', 'ejs');

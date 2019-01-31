@@ -5,7 +5,7 @@ import {
   updateRecordById,
   deleteRecord,
 } from '../controllers/recordController';
-import { login, register, loginRequired } from '../controllers/userController';
+import { login, register, loginRequired, createUser } from '../controllers/userController';
 import {
   createOrder,
   getOrder,
@@ -33,7 +33,7 @@ router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE
 router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE
 
 // USER ROUTES
-
+router.post('/users', createUser)
 
 // AUTHORIZATION ROUTES / USER ROUTES
 router.post('/auth/register', register)

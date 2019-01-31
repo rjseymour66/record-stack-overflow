@@ -2,8 +2,10 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserSchema } from '../models/userModel';
+import { SuperSchema } from '../models/userTest';
 
 const User = mongoose.model('User', UserSchema);
+const Super = mongoose.model('Super', SuperSchema)
 
 export const register = (req, res) => {
   const newUser = new User(req.body);
@@ -46,9 +48,22 @@ export const loginRequired = (req, res, next) => {
     return res.status(401).json({ ERROR: 'Unauthorized user' });
   }
 };
-<<<<<<< HEAD
 
 // CREATE / REGISTER IS SAME AS CREATE
+
+export const createUser = (req, res) => {
+  const body = req.body
+  let superUser = new Super(body)
+
+  superUser.save().then(() => {
+    return superUser.generateAuthToken()
+  }).then((token) => {
+    res.header('x-auth', token).send(superUser);
+  })
+  .catch((e) => {
+    res.status(400).send(e)
+  })
+}
 
 // RETRIEVE / GET USER INFORMATION
   // require username, email, password
@@ -56,7 +71,7 @@ export const loginRequired = (req, res, next) => {
 // UPDATE / PUT 
   // change username, change email, change password
 
+
+
 // DELETE / DELETE USER ACCOUNT
   // delete account to get new API key
-=======
->>>>>>> da43ef651e067242ea7ad5a6b67b031587b12420
