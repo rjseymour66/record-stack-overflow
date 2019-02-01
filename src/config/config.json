@@ -2,7 +2,7 @@
   "test": {
     "PORT": 4000,
     "DATABASE_URL": "mongodb://localhost/record-stack-overflowtest",
-    "JWT_SECRET": "Bluesbrfasdfaosdijfas;dfjs66",
+    "JWT_SECRET": "Bluesbreakers66",
     "SUPER_USER": "DFhj;oFJKLAAFLKJDVkj;asdf"
   },
   "development": {
