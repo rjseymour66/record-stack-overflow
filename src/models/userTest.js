@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 const Schema = mongoose.Schema;
 
@@ -50,7 +51,7 @@ SuperSchema.methods.toJSON = function() {
 SuperSchema.methods.generateAuthToken = function () {
   let user = this;
   let access = 'auth';
-  let token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
+  let token = jwt.sign({_id: user._id.toHexString(), access}, process.env.SUPER_USER).toString();
 
   user.tokens = user.tokens.concat([{ access, token }])
 
@@ -64,7 +65,7 @@ SuperSchema.statics.findByToken = function(token) {
   let decoded;
 
   try {
-    decoded = jwt.verify(token, 'abc123');
+    decoded = jwt.verify(token, process.env.SUPER_USER);
   } catch(e) {
     return Promise.reject();
   }
@@ -75,3 +76,20 @@ SuperSchema.statics.findByToken = function(token) {
     'tokens.access': 'auth'
   });
 };
+
+SuperSchema.pre('save', function(next) {
+  let user = this;
+
+  if (user.isModified('password')) {
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash;
+        next();
+      })
+    })
+  } else {
+    next();
+  }
+});
+
+

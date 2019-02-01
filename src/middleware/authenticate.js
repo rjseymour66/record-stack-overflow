@@ -40,7 +40,7 @@ export const login = (req, res) => {
       if (!user.comparePassword(req.body.password, user.hashPassword)) {
         res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
       } else {
-        return res.json({ token: jwt.sign({ email: user.email, username: user.username, _id: user.id }, 'JWT_TOKEN') });
+        return res.json({ token: jwt.sign({ email: user.email, username: user.username, _id: user.id }, process.env.JWT_SECRET) });
       }
     }
   });
