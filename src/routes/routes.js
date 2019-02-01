@@ -5,14 +5,15 @@ import {
   updateRecordById,
   deleteRecord,
 } from '../controllers/recordController';
-import { login, register, loginRequired, createUser } from '../controllers/userController';
+import { createUser } from '../controllers/userController';
+import { login, register, loginRequired, authenticateUser } from '../middleware/authenticate';
 import {
   createOrder,
   getOrder,
   getAllOrders,
   updateOrderById,
   deleteOrder,
-  falseAvailable
+  
 } from '../controllers/orderController';
 
 const router = express.Router();
@@ -32,8 +33,17 @@ router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
 router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE
 router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE
 
-// USER ROUTES
+
+
+
+// USER ROUTES - MEAD
 router.post('/users', createUser)
+router.get('/users/me', authenticateUser, (req, res) => {
+  res.send(req.user);
+})
+
+
+
 
 // AUTHORIZATION ROUTES / USER ROUTES
 router.post('/auth/register', register)
