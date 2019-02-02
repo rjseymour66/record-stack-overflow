@@ -25,16 +25,16 @@ export const RecordSchema = new Schema ({
     type: String,
     required: 'Enter the condition'
   },
-  location: {
-    type: String,
-    required: 'Enter the location'
-  },
   created_date: {
     type: Date,
     default: Date.now
   },
   comments: {
-    type: Array
+    type: [{}]
+  },
+  _createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
   }
 });
 

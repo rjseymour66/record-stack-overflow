@@ -9,7 +9,14 @@ const Record = mongoose.model('Record', RecordSchema);
 
 // CREATE / POST NEW RECORD
 export const createRecord = (req, res) => {
-  let record = new Record(req.body);
+  let record = new Record({
+    artist: req.body.artist,
+    title: req.body.title,
+    price: req.body.price,
+    condition: req.body.condition,
+    comments: req.body.comments,
+    _createdBy: req.user._id
+  })  
   record.save((err, data) => {
     if (err) {
       return res.status(400).json({ ERROR: "Request failed." })
@@ -87,6 +94,8 @@ export const getAllRecords = (req, res) => {
 export const updateRecordById = (req, res) => {
   const id = { _id: req.params.record_id };
   const updatedInfo = req.body;
+  // const userKey = req.user._id
+  // const _createdBy = data._createdBy;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
     if (err) {
       res.status(404).json({ ERROR: "Record not found. Check record id." })
@@ -95,6 +104,17 @@ export const updateRecordById = (req, res) => {
     }
   });
 };
+
+// if(userKey !== _createdBy) {
+//   res.status(404).json({ ERROR: "Insufficient privileges" })
+// } else if (err) {
+//   res.status(404).json({ ERROR: "Record not found. Check record id." })
+// } else {
+//   res.json(data)
+// }
+// });
+// };
+
 
 // DELETE RECORD BY ID
 export const deleteRecord = (req, res) => {

@@ -6,7 +6,14 @@ import {
   deleteRecord,
 } from '../controllers/recordController';
 import { createUser } from '../controllers/userController';
-import { login, register, loginRequired, authenticateUser } from '../middleware/authenticate';
+import { 
+  login,
+  registerUser,
+  registerMerchant,
+  loginRequired,
+  merchantLoginRequired,
+  loginMerchant,
+  authenticateUser } from '../middleware/authenticate';
 import {
   createOrder,
   getOrder,
@@ -20,10 +27,10 @@ const router = express.Router();
 
 
 // RECORD ROUTES
-router.post('/api/v1/records', loginRequired, createRecord); // DONE
+router.post('/api/v1/records', merchantLoginRequired, createRecord); // DONE
 router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
-router.put('/api/v1/records/:record_id', loginRequired, updateRecordById) // DONE
-router.delete('/api/v1/records/:record_id', loginRequired, deleteRecord) // DONE
+router.put('/api/v1/records/:record_id', merchantLoginRequired, updateRecordById) // DONE
+router.delete('/api/v1/records/:record_id', merchantLoginRequired, deleteRecord) // DONE
 
 
 // ORDER ROUTES
@@ -43,11 +50,15 @@ router.get('/users/me', authenticateUser, (req, res) => {
 })
 
 
-
-
 // AUTHORIZATION ROUTES / USER ROUTES
-router.post('/auth/register', register)
-router.post('/auth/login', login)
+router.post('/auth/register/user', registerUser)
+router.post('/auth/login/user', login)
+
+
+// AUTHORIZATION ROUTES / MERCHANT
+router.post('/auth/register/merchant', registerMerchant)
+router.post('/auth/login/merchant', loginMerchant)
+
 
 // VIEW ROUTES
 router.get('/', (req, res) => {

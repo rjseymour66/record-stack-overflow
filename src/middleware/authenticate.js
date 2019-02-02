@@ -3,14 +3,16 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserSchema } from '../models/userModel';
 import { SuperSchema } from '../models/userTest';
+import { MerchantSchema } from '../models/merchantModel'
 
 const User = mongoose.model('User', UserSchema);
 const Super = mongoose.model('Super', SuperSchema)
+const Merchant = mongoose.model('Merchant', MerchantSchema)
 
 
 // REGISTER NEW USER
 
-export const register = (req, res) => {
+export const registerUser = (req, res) => {
   const newUser = new User(req.body);
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
   newUser.save((err, user) => {
@@ -23,7 +25,23 @@ export const register = (req, res) => {
       return res.json(user);
     }
   })
+};
 
+// REGISTER NEW MERCHANT
+
+export const registerMerchant = (req, res) => {
+  const newMerchant = new Merchant(req.body);
+  newMerchant.hashPassword = bcrypt.hashSync(req.body.password, 10);
+  newMerchant.save((err, merchant) => {
+    if (err) {
+      return res.status(400).send({
+        message: err
+      });
+    } else {
+      newMerchant.hashPassword = undefined;
+      return res.json(merchant);
+    }
+  })
 };
 
 
@@ -46,16 +64,50 @@ export const login = (req, res) => {
   });
 };
 
+// LOGIN MERCHANT GET TOKEN
+
+
+export const loginMerchant = (req, res) => {
+  Merchant.findOne({
+    email: req.body.email
+  }, (err, merchant) => {
+    if (err) throw err;
+    if (!merchant) {
+      res.status(401).json({ ERROR: 'Authentication failed. No merchant found.' });
+    } else if (merchant) {
+      if (!merchant.comparePassword(req.body.password, merchant.hashPassword)) {
+        res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
+      } else {
+        return res.json({ token: jwt.sign({ companyName: merchant.companyName, primaryContact: merchant.primaryContact, email: merchant.email, _id: merchant.id }, process.env.JWT_SECRET) });
+      }
+    }
+  });
+};
+
+
 
 // CHECK USER CREDS
 export const loginRequired = (req, res, next) => {
   if (req.user) {
+
     next();
   } else {
     return res.status(401).json({ ERROR: 'Unauthorized user' });
   }
 };
 
+// MERCHANT LOGIN REQUIRED
+
+export const merchantLoginRequired = (req, res, next) => {
+  if(req.user.companyName) {
+
+    next();
+  } else {
+    return res.status(401).json({ ERROR: 'Unauthorized user. Configure merchant account to complete action.' });
+  }
+}
+
+// ==============================================================================================================
 
 // AUTHENTICATE USER CREATED THAT ROUTE
 
