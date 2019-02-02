@@ -107,23 +107,3 @@ export const merchantLoginRequired = (req, res, next) => {
   }
 }
 
-// ==============================================================================================================
-
-// AUTHENTICATE USER CREATED THAT ROUTE
-
-export const authenticateUser = (req, res, next) => {
-  let token = req.header('x-auth');
-
-  Super.findByToken(token).then((user) => {
-    if (!user) {
-      return Promise.reject();
-    }
-
-    req.user = user;
-    req.token = token;
-    next();
-    res.send(user)
-  }).catch((e) => {
-    res.status(401).send()
-  })
-}

@@ -41,15 +41,6 @@ router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE
 router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE
 
 
-
-
-// USER ROUTES - MEAD
-router.post('/users', createUser)
-router.get('/users/me', authenticateUser, (req, res) => {
-  res.send(req.user);
-})
-
-
 // AUTHORIZATION ROUTES / USER ROUTES
 router.post('/auth/register/user', registerUser)
 router.post('/auth/login/user', login)
