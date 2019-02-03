@@ -39,4 +39,12 @@ export const RecordSchema = new Schema ({
 });
 
 
-// module.exports = mongoose.model('Record', RecordSchema)
+RecordSchema.pre('exec', function(next) {
+  let record = this;
+
+  if (record._createdBy !== req.user._id){
+    res.status(404).json({Error : 'Insufficient privileges'})
+  } else {
+    next();
+  }
+})

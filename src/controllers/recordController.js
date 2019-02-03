@@ -106,25 +106,28 @@ export const getAllRecords = (req, res) => {
 // };
 
 
+
 export const updateRecordById = (req, res) => {
-  const id = req.params.record_id;
-  const creatorId = req.user._id;
-  const _createdBy = req.body._createdBy
+  const id = { _id: req.params.record_id };
   const updatedInfo = req.body;
-  Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
-    if(creatorId === _createdBy) {
-      res.json(data)
+  Record.findOneAndUpdate(id, updatedInfo, { new: true })
+    .exec((err, data) => {
+    if (err) {
+      res.status(404).json({ ERROR: "Record not found. Check record id." })
     } else {
-      res.status(401).json({ ERROR: "Insufficient privileges." })
+      res.json(data)
     }
   });
 };
 
-// if (err) {
-//   res.status(401).json({ ERROR: "Record not found. Check record id." })
-// } else {
-//   res.json(data)
-// }
+
+// Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
+//   if (err) {
+//     res.status(404).json({ ERROR: "Record not found. Check record id." })
+//   } else {
+//     res.json(data)
+//   }
+// });
 
 
 

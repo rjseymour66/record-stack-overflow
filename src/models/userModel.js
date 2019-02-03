@@ -27,16 +27,6 @@ export const UserSchema = new Schema({
         required: true,
         minlength: 6
     },
-    tokens: [{
-        bearer: {
-          type: String,
-          required: true
-        },
-        token: {
-          type: String,
-          required: true
-        }
-    }],
     created_date: {
        type: Date,
        default: Date.now 

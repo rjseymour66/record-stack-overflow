@@ -12,9 +12,10 @@ import {
   loginRequired,
   merchantLoginRequired,
   loginMerchant,
-  authenticateUser,
-  findRecordById,
-  verifyUserId
+  verifyMerchant,
+  verifyRecordCreatedby
+  
+  
 } from '../middleware/authenticate';
 import {
   createOrder,
@@ -29,10 +30,10 @@ const router = express.Router();
 
 
 // RECORD ROUTES
-router.post('/api/v1/records',  merchantLoginRequired, createRecord); // DONE
+router.post('/api/v1/records',  verifyMerchant, loginRequired, createRecord); // DONE
 router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
-router.put('/api/v1/records/:record_id', authenticateUser, updateRecordById) // DONE
-router.delete('/api/v1/records/:record_id', merchantLoginRequired, deleteRecord) // DONE
+router.put('/api/v1/records/:record_id', verifyMerchant, verifyRecordCreatedby, loginRequired, updateRecordById) // DONE
+router.delete('/api/v1/records/:record_id', verifyMerchant, loginRequired, deleteRecord) // DONE
 
 
 // ORDER ROUTES
