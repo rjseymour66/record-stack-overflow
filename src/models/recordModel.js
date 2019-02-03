@@ -29,9 +29,9 @@ export const RecordSchema = new Schema ({
     type: Date,
     default: Date.now
   },
-  comments: {
-    type: [{}]
-  },
+  comments: [{
+    type: String
+  }],
   _createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     required: true

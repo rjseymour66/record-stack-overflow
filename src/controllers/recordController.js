@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { RecordSchema } from '../models/recordModel';
-import { OrderSchema } from '../models/orderModel';
 
 
 // require model
@@ -16,7 +15,7 @@ export const createRecord = (req, res) => {
     condition: req.body.condition,
     comments: req.body.comments,
     _createdBy: req.user._id
-  })  
+  })
   record.save((err, data) => {
     if (err) {
       return res.status(400).json({ ERROR: "Request failed." })
@@ -29,15 +28,15 @@ export const createRecord = (req, res) => {
 // RETRIEVE / GET ALL RECORDS
 export const getAllRecords = (req, res) => {
   const limit = parseInt(req.query.limit)
-  const artistSort = { artist: 1 }
+  const sort = { artist: req.query.sort }
   const offset = parseInt(req.query.offset)
   const artist = req.query.artist
-  const location = req.query.location
+  const merchant = req.query.merchant
 
-  if (artist && location) {
-    Record.find({ $and: [{ artist: artist }, { location: location }] })
+  if (artist && merchant) {
+    Record.find({ $and: [{ artist: artist }, { merchant: merchant }] })
       .limit(limit)
-      .sort(artistSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {
@@ -46,10 +45,10 @@ export const getAllRecords = (req, res) => {
           res.json(data)
         }
       })
-  } else if (location) {
-    Record.find({ location: location })
+  } else if (merchant) {
+    Record.find({ merchant: merchant })
       .limit(limit)
-      .sort(artistSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {
@@ -62,7 +61,7 @@ export const getAllRecords = (req, res) => {
   } else if (artist) {
     Record.find({ artist: artist })
       .limit(limit)
-      .sort(artistSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {
@@ -74,7 +73,7 @@ export const getAllRecords = (req, res) => {
   } else {
     Record.find()
       .limit(limit)
-      .sort(artistSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {
@@ -91,32 +90,47 @@ export const getAllRecords = (req, res) => {
 
 
 // UPDATE / PUT BY ID
+
+// export const updateRecordById = (req, res) => {
+//   const id = req.params.record_id;
+//   // const creatorId = req.user._id;
+//   const updatedInfo = req.body;
+//   // const query = { _id: id, _createdBy: creatorId }
+//   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
+//     if (err) {
+//       res.status(401).json({ ERROR: "Record not found. Check record id." })
+//     } else {
+//       res.json(data)
+//     }
+//   });
+// };
+
+
 export const updateRecordById = (req, res) => {
-  const id = { _id: req.params.record_id };
+  const id = req.params.record_id;
+  const creatorId = req.user._id;
+  const _createdBy = req.body._createdBy
   const updatedInfo = req.body;
-  // const userKey = req.user._id
-  // const _createdBy = data._createdBy;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
-    if (err) {
-      res.status(404).json({ ERROR: "Record not found. Check record id." })
-    } else {
+    if(creatorId === _createdBy) {
       res.json(data)
+    } else {
+      res.status(401).json({ ERROR: "Insufficient privileges." })
     }
   });
 };
 
-// if(userKey !== _createdBy) {
-//   res.status(404).json({ ERROR: "Insufficient privileges" })
-// } else if (err) {
-//   res.status(404).json({ ERROR: "Record not found. Check record id." })
+// if (err) {
+//   res.status(401).json({ ERROR: "Record not found. Check record id." })
 // } else {
 //   res.json(data)
 // }
-// });
-// };
+
+
 
 
 // DELETE RECORD BY ID
+
 export const deleteRecord = (req, res) => {
   Record.remove({ _id: req.params.record_id }, (err, data) => {
     if (err) {
@@ -126,3 +140,24 @@ export const deleteRecord = (req, res) => {
     }
   });
 };
+
+
+
+
+
+
+
+// export const deleteRecord = (req, res) => {
+
+//   const id = req.params.record_id;
+//   const creatorId = req.user._id;
+//   const _createdBy = req.body._createdBy
+
+//   Record.findById(id, (err, data) => {
+//     if(creatorId === _createdBy) {
+//       Record.remove()
+//       res.json({ SUCCESS: 'Record object deleted' })
+//     }
+//     res.status(404).json({ ERROR: "Record not found. Check record id." })
+//   })
+// }
