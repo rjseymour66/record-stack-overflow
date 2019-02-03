@@ -108,51 +108,5 @@ export const verifyMerchant = (req, res, next) => {
     next();
 }
 
-export const verifyRecordCreatedby = (req, res, next) => {
-  const recId = req.params.record_id;
-  const merchId = req.user._id
-
-  console.log('RECORD ID', recId);
-  
-  
-  Record.findById(recId, (err, record) => {
-    if(record._createdBy !== merchId){
-      console.log('Created By******', record._createdBy);
-      console.log('MERCH ID********', merchId);
-      return err
-    }
-  })
-  next()
-
-}
 
 
-
-   
-
-// METHOD -> Pull out createdBy with FindByID -> Verify user._id === _createdBy -> UPDATE
-
-// METHOD -> Pull out createdBy with FindByID -> Verify user._id === _createdBy -> DELETE
-
-
-
-
-
-
-
-// export const authenticateUser = (req, res, next) => {
-  //   let token = req.header('Authorization');
-  
-  //   Merchant.findByToken(token).then((merchant) => {
-  //     if (!merchant) {
-  //       return Promise.reject();
-  //     }
-  
-  //     req.user = user;
-  //     req.headers['Authorization'] = token
-  //     next();
-  //     res.send(merchant)
-  //   }).catch((e) => {
-  //     res.status(401).send()
-  //   })
-  // }

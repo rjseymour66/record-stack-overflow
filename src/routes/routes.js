@@ -1,22 +1,15 @@
 import express from 'express';
+
+
+// RECORD CONTROLLER
 import {
   createRecord,
   getAllRecords,
   updateRecordById,
   deleteRecord,
 } from '../controllers/recordController';
-import { 
-  login,
-  registerUser,
-  registerMerchant,
-  loginRequired,
-  merchantLoginRequired,
-  loginMerchant,
-  verifyMerchant,
-  verifyRecordCreatedby
-  
-  
-} from '../middleware/authenticate';
+
+// ORDER CONTROLLER
 import {
   createOrder,
   getOrder,
@@ -25,6 +18,16 @@ import {
   deleteOrder,
 } from '../controllers/orderController';
 
+// MIDDLEWARE
+import { 
+  login,
+  registerUser,
+  registerMerchant,
+  loginRequired,
+  loginMerchant,
+  verifyMerchant,
+
+} from '../middleware/authenticate';
 
 const router = express.Router();
 
@@ -32,7 +35,7 @@ const router = express.Router();
 // RECORD ROUTES
 router.post('/api/v1/records',  verifyMerchant, loginRequired, createRecord); // DONE
 router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
-router.put('/api/v1/records/:record_id', verifyMerchant, verifyRecordCreatedby, loginRequired, updateRecordById) // DONE
+router.put('/api/v1/records/:record_id', verifyMerchant, loginRequired, updateRecordById) // DONE
 router.delete('/api/v1/records/:record_id', verifyMerchant, loginRequired, deleteRecord) // DONE
 
 
