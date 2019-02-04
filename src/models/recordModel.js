@@ -33,7 +33,7 @@ export const RecordSchema = new Schema ({
     type: String
   }],
   _createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true
   }
 });
@@ -48,3 +48,5 @@ RecordSchema.pre('exec', function(next) {
     next();
   }
 })
+
+// mongoose.Schema.Types.ObjectId

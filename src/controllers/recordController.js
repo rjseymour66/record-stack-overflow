@@ -110,40 +110,31 @@ export const getAllRecords = (req, res) => {
 export const updateRecordById = (req, res) => {
   const id = { _id: req.params.record_id };
   const updatedInfo = req.body;
-  Record.findOneAndUpdate(id, updatedInfo, { new: true })
-    .exec((err, data) => {
-    if (err) {
+  const merchId = req.user._id;
+  Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, record) =>{
+    if(merchId !== record._createdBy) {
       res.status(404).json({ ERROR: "Record not found. Check record id." })
     } else {
-      res.json(data)
+    res.json(record)
     }
-  });
-};
-
-
-// Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
-//   if (err) {
-//     res.status(404).json({ ERROR: "Record not found. Check record id." })
-//   } else {
-//     res.json(data)
-//   }
-// });
-
-
+  })
+}
+    
 
 
 // DELETE RECORD BY ID
 
 export const deleteRecord = (req, res) => {
-  Record.remove({ _id: req.params.record_id }, (err, data) => {
-    if (err) {
-      res.status(404).json({ ERROR: "Record not found. Check record id." })
+  const id = { _id: req.params.record_id }
+  const merchId = req.user._id;
+  Record.findByIdAndRemove(id, (err, record) => {
+    if(merchId !== record._createdBy) {
+      res.status(404).json({ ERROR: "Insufficient privileges" })
     } else {
       res.json({ SUCCESS: 'Record object deleted' })
     }
-  });
+  })
 };
-
 
 
 
