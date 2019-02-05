@@ -13,7 +13,20 @@ const Record = mongoose.model('Record', RecordSchema)
 // REGISTER NEW USER
 
 export const registerUser = (req, res) => {
-  const newUser = new User(req.body);
+  const newUser = new User({
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    shipping_info: [{
+      shipping_address1: req.body.shipping_address1,
+      shipping_address2: req.body.shipping_address2,
+      shipping_city: req.body.shipping_city,
+      shipping_state: req.body.shipping_state,
+      shipping_zip: req.body.shipping_zip
+    }]    
+  });
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
   newUser.save((err, user) => {
     if (err) {
@@ -23,23 +36,6 @@ export const registerUser = (req, res) => {
     } else {
       user.hashPassword = undefined;
       return res.json(user);
-    }
-  })
-};
-
-// REGISTER NEW MERCHANT
-
-export const registerMerchant = (req, res) => {
-  const newMerchant = new Merchant(req.body);
-  newMerchant.hashPassword = bcrypt.hashSync(req.body.password, 10);
-  newMerchant.save((err, merchant) => {
-    if (err) {
-      return res.status(400).send({
-        message: err
-      });
-    } else {
-      newMerchant.hashPassword = undefined;
-      return res.json(merchant);
     }
   })
 };
@@ -56,11 +52,34 @@ export const login = (req, res) => {
       if (!user.comparePassword(req.body.password, user.hashPassword)) {
         res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
       } else {
-        return res.json({ 'secret token' : jwt.sign({ email: user.email, username: user.username, _id: user.id }, process.env.JWT_SECRET) 
+        return res.json({ 'secret token' : jwt.sign({ 
+          email: user.email, 
+          username: user.username, 
+          _id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName }, process.env.JWT_SECRET) 
         });
       }
     }
   });
+};
+
+
+// REGISTER NEW MERCHANT
+
+export const registerMerchant = (req, res) => {
+  const newMerchant = new Merchant(req.body);
+  newMerchant.hashPassword = bcrypt.hashSync(req.body.password, 10);
+  newMerchant.save((err, merchant) => {
+    if (err) {
+      return res.status(400).send({
+        message: err
+      });
+    } else {
+      newMerchant.hashPassword = undefined;
+      return res.json(merchant);
+    }
+  })
 };
 
 // LOGIN MERCHANT GET TOKEN
@@ -123,6 +142,10 @@ export const createdBy = (req, res, next) => {
     res.status(404).json({ ERROR: "Insufficient privileges" })  } else {
       next();
   }
+}
+
+export const orderedBy = (req, res, next) => {
+  
 }
 
 

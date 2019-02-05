@@ -31,10 +31,10 @@ export const getAllRecords = (req, res) => {
   const sort = { artist: req.query.sort }
   const offset = parseInt(req.query.offset)
   const artist = req.query.artist
-  const merchant = req.query.merchant
+  const companyName = req.query.companyName
 
-  if (artist && merchant) {
-    Record.find({ $and: [{ artist: artist }, { merchant: merchant }] })
+  if (artist && companyName) {
+    Record.find({ $and: [{ artist: artist }, { companyName: companyName }] })
       .limit(limit)
       .sort(sort)
       .skip(offset)
@@ -45,8 +45,8 @@ export const getAllRecords = (req, res) => {
           res.json(data)
         }
       })
-  } else if (merchant) {
-    Record.find({ merchant: merchant })
+  } else if (companyName) {
+    Record.find({ companyName: companyName })
       .limit(limit)
       .sort(sort)
       .skip(offset)
@@ -84,27 +84,6 @@ export const getAllRecords = (req, res) => {
       })
   }
 }
-
-
-
-
-
-// UPDATE / PUT BY ID
-
-// export const updateRecordById = (req, res) => {
-//   const id = req.params.record_id;
-//   // const creatorId = req.user._id;
-//   const updatedInfo = req.body;
-//   // const query = { _id: id, _createdBy: creatorId }
-//   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
-//     if (err) {
-//       res.status(401).json({ ERROR: "Record not found. Check record id." })
-//     } else {
-//       res.json(data)
-//     }
-//   });
-// };
-
 
 
 export const updateRecordById = (req, res) => {

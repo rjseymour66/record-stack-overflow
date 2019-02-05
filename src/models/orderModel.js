@@ -1,5 +1,30 @@
 import mongoose from 'mongoose';
+import { ShippingSchema } from './userModel';
+
 const Schema = mongoose.Schema;
+
+
+export const CustomerSchema = new Schema({
+  username: {
+    type: String,
+    required: 'Customer username required'
+  },
+  email: {
+    type: String,
+    required: 'Customer email required'
+  },
+  firstName: {
+    type: String,
+    required: 'Customer first name required'
+  },
+  lastName: {
+    type: String,
+    required: 'Customer last name required'
+  },
+  _id: false,
+  id: false
+})
+
 
 export const OrderSchema = new Schema ({
   status: {
@@ -14,35 +39,20 @@ export const OrderSchema = new Schema ({
     type: String,
     required: 'Enter the price'
   },
-  customer_firstName: {
-    type: String,
-    required: 'Enter the customer first name'
-  },
-  customer_lastName: {
-    type: String,
-    required: 'Enter the customer last name'
-  },
-  shipping_street: {
-    type: String,
-    required: 'Enter the customer street address'
-  },
-  shipping_city: {
-    type: String,
-    required: 'Enter the customer city'
-  },
-  shipping_state: {
-    type: String,
-    required: 'Enter the customer state'
-  },
-  shipping_zip: {
-    type: String,
-    required: 'Enter the customer zip code'
-  },
+  
+  customer: [CustomerSchema],
+
+  shipping_info: [ShippingSchema],
+
   created_date: {
     type: Date,
     default: Date.now
   },
-  comments: {
-    type: Array
+  comments: [{
+    type: String
+  }],
+  _createdBy: {
+    type: String,
+    required: true,
   }
 });

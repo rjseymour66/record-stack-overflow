@@ -17,31 +17,36 @@ const Record = mongoose.model('Record', RecordSchema);
 
 // CREATE / POST NEW ORDER
 export const createOrder = (req, res) => {
-  let order = new Order(req.body);
-  order.save((err, data) => {
+
+  let order = new Order({
+    record_id: req.body.record_id,
+    price: req.body.price,
+    customer: [{
+      username: req.user.username,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      lastName: req.user.lastName
+    }],
+    shipping_info: [{
+      shipping_address1: req.body.shipping_address1,
+      shipping_address2: req.body.shipping_address2,
+      shipping_city: req.body.shipping_city,
+      shipping_state: req.body.shipping_state,
+      shipping_zip: req.body.shipping_zip
+    }],
+    comments: [req.body.comments],
+    _createdBy: req.user._id
+  });
+  order.save((err, order_info) => {
     if (err) {
       return res.status(400).send({
         message: err
       });
     } else {
-      return res.json({SUCCESS: 'Order created!', 'New Order Information': data});
+      return res.json({order_info});
     }
   });
 };
-
-// MAKE RECORD NOT AVAILABLE
-// export const falseAvailable = (req, res) => {
-//   const id = createOrder.order.body.record_id
-//   const updatedInfo = { available : false }
-//   Order.findOneAndUpdate(id, updatedInfo)
-//   .exec((err, data) => {
-//     if (err) {
-//       res.status(404).json({ ERROR: "Order not found. Check order id."})
-//     } else {
-//       res.json(data)
-//     }
-//   })
-// }
 
 
 // RETRIEVE / GET ONE ORDER
@@ -97,13 +102,14 @@ export const getAllOrders = (req, res) => {
 
   // Update an order
   export const updateOrderById = (req, res) => {
-    const id = req.params.order_id
+    const id = { _id: req.params.order_id }
     const updatedInfo = req.body;
-    Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, data) => {
-      if (err) {
+    const userId = req.user._id
+    Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, order) => {
+      if (userId !== order._createdBy) {
         res.status(404).json({ message: "Order not found. Check order id."})
       } else {
-        res.json(data)
+        res.json(order)
       }
     });
   };
