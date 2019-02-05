@@ -25,7 +25,7 @@ export const UserSchema = new Schema({
     hashPassword: {
         type: String,
         required: true,
-        minlength: 6
+        minlength: 1
     },
     created_date: {
        type: Date,

@@ -108,5 +108,24 @@ export const verifyMerchant = (req, res, next) => {
     next();
 }
 
+// CREATED BY MIDDLEWARE - MERCHANT
+
+export const createdBy = (req, res, next) => {
+  const merchId = req.params.merchant_id;
+  const userId = req.user._id
+  const recId = req.params.record_id;
+
+  console.log('***************** MerchantID', merchId);
+  console.log('*****************    User ID', userId);
+  console.log('*****************  Record ID', recId);
+
+  if(merchId !== userId){
+    res.status(404).json({ ERROR: "Insufficient privileges" })  } else {
+      next();
+  }
+}
+
+
+
 
 

@@ -119,39 +119,3 @@ export const updateRecordById = (req, res) => {
     }
   })
 }
-    
-
-
-// DELETE RECORD BY ID
-
-export const deleteRecord = (req, res) => {
-  const id = { _id: req.params.record_id }
-  const merchId = req.user._id;
-  Record.findByIdAndRemove(id, (err, record) => {
-    if(merchId !== record._createdBy) {
-      res.status(404).json({ ERROR: "Insufficient privileges" })
-    } else {
-      res.json({ SUCCESS: 'Record object deleted' })
-    }
-  })
-};
-
-
-
-
-
-
-// export const deleteRecord = (req, res) => {
-
-//   const id = req.params.record_id;
-//   const creatorId = req.user._id;
-//   const _createdBy = req.body._createdBy
-
-//   Record.findById(id, (err, data) => {
-//     if(creatorId === _createdBy) {
-//       Record.remove()
-//       res.json({ SUCCESS: 'Record object deleted' })
-//     }
-//     res.status(404).json({ ERROR: "Record not found. Check record id." })
-//   })
-// }

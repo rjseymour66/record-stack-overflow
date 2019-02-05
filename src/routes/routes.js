@@ -6,7 +6,6 @@ import {
   createRecord,
   getAllRecords,
   updateRecordById,
-  deleteRecord,
 } from '../controllers/recordController';
 
 // ORDER CONTROLLER
@@ -18,6 +17,11 @@ import {
   deleteOrder,
 } from '../controllers/orderController';
 
+// MERCHANT CONTROLLER
+import {
+  deleteRecord
+} from '../controllers/merchantController'
+
 // MIDDLEWARE
 import { 
   login,
@@ -26,7 +30,7 @@ import {
   loginRequired,
   loginMerchant,
   verifyMerchant,
-
+  createdBy
 } from '../middleware/authenticate';
 
 const router = express.Router();
@@ -36,15 +40,27 @@ const router = express.Router();
 router.post('/api/v1/records',  verifyMerchant, loginRequired, createRecord); // DONE
 router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
 router.put('/api/v1/records/:record_id', verifyMerchant, loginRequired, updateRecordById) // DONE
-router.delete('/api/v1/records/:record_id', verifyMerchant, loginRequired, deleteRecord) // DONE
+//router.delete('/api/v1/records/:record_id', verifyMerchant, loginRequired, deleteRecord) // DONE
 
 
 // ORDER ROUTES
 router.post('/api/v1/orders', loginRequired, createOrder)// DONE
-router.get('/api/v1/orders/:order_id', loginRequired, getOrder) // DONE
+//router.get('/api/v1/orders/:order_id', loginRequired, getOrder) // DONE
 router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
-router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE
-router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE
+router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE MAKE PRIVATE ******************
+router.delete('/api/v1/orders/:order_id', loginRequired, deleteOrder) // DONE MAKE PRIVATE ******************
+
+// MERCHANT ROUTES
+// router.get('/api/v1/merchants/:merchant_id/records', loginRequired, getAllMerchantRecords) // get all records by merchant
+// router.get('/api/v1/merchants/:merchant_id/orders', loginRequired, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBY
+// router.get('/api/v1/merchants/:merchant_id', loginRequired, getMerchant) // get merchant information 
+// router.put('/api/v1/merchants/:merchant_id', loginRequired, updateMerchant) // update merchant account information PRIVATE
+router.delete('/api/v1/merchants/:merchant_id/records/:record_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
+
+// USER ROUTES
+// router.get('/api/v1/users/:user_id', loginRequired, updateUser) // get user info PRIVATE
+// router.put('/api/v1/users/:user_id') // update user info PRIVATE
+// router.put('/api/v1/users/:user_id/orders/:order_id') // get orders by user PRIVATE
 
 
 // AUTHORIZATION ROUTES / USER ROUTES
