@@ -1,18 +1,8 @@
 import mongoose from 'mongoose';
 import { OrderSchema } from '../models/orderModel';
-import { RecordSchema } from '../models/recordModel';
 
 // require model
 const Order = mongoose.model('Order', OrderSchema);
-const Record = mongoose.model('Record', RecordSchema);
-
-
-// find record and create order
-
-      // find record by id
-      // change available to false
-      // create order with record id as album_id
-
 
 
 // CREATE / POST NEW ORDER
@@ -27,12 +17,6 @@ export const createOrder = (req, res) => {
       email: req.user.email,
       firstName: req.user.firstName,
       lastName: req.user.lastName
-    }],
-    seller_info: [{
-      merchant_id: req.body.merchant_id,
-      companyName: req.body.companyName,
-      primaryContact: req.body.primaryContact,
-      phoneNumber: req.body.phoneNumber
     }],
     shipping_info: [{
       shipping_address1: req.body.shipping_address1,
@@ -49,7 +33,13 @@ export const createOrder = (req, res) => {
       billing_state: req.body.billing_state,
       billing_zip: req.body.billing_zip
     }],
-    comments: [req.body.comments],
+    seller_info: [{
+      merchant_id: req.body.merchant_id,
+      companyName: req.body.companyName,
+      primaryContact: req.body.primaryContact,
+      phoneNumber: req.body.phoneNumber
+    }],
+    comments: req.body.comments,
     _createdBy: req.user._id
   });
   order.save((err, order_info) => {

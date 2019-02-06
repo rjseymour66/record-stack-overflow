@@ -14,7 +14,7 @@ export const BillingSchema = new Schema({
   },
   billing_address1: {
     type: String,
-    required: 'Address 1 required'
+    default: undefined
   },
   billing_address2: {
     type: String,
@@ -22,15 +22,15 @@ export const BillingSchema = new Schema({
   },
   billing_city: {
     type: String,
-    required: 'City required'
+    default: undefined,
   },
   billing_state: {
     type: String,
-    required: 'State required'
+    default: undefined,
   },
   billing_zip: {
     type: String,
-    required: 'Zip code required'
+    default: undefined,
   },
   _id: false,
   id: false
