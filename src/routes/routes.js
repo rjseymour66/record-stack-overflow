@@ -20,6 +20,9 @@ import {
 // MERCHANT CONTROLLER
 import {
   getAllMerchantRecords,
+  getAllMerchantOrders,
+  getMerchant,
+  updateMerchantById,
   deleteRecord
 } from '../controllers/merchantController'
 
@@ -44,16 +47,16 @@ router.put('/api/v1/records/:record_id', verifyMerchant, loginRequired, updateRe
 
 
 // ORDER ROUTES
-router.post('/api/v1/orders', loginRequired, createOrder)// DONE
+router.post('/api/v1/records/:record_id/orders', loginRequired, createOrder)// DONE
 router.get('/api/v1/orders/:order_id', loginRequired, getOrder) // DONE
 router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
 router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE MAKE PRIVATE
 
 // MERCHANT ROUTES
 router.get('/api/v1/merchants/:merchant_id/records', loginRequired, getAllMerchantRecords) // get all records by merchant
-// router.get('/api/v1/merchants/:merchant_id/orders', loginRequired, createdBy, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBY
-// router.get('/api/v1/merchants/:merchant_id', loginRequired, getMerchant) // get merchant information 
-// router.put('/api/v1/merchants/:merchant_id', loginRequired, updateMerchant) // update merchant account information PRIVATE
+router.get('/api/v1/merchants/:merchant_id/orders', loginRequired, createdBy, getAllMerchantOrders) // get all orders by merchant PRIVATE 
+router.get('/api/v1/merchants/:merchant_id', loginRequired, getMerchant) // get merchant information 
+router.put('/api/v1/merchants/:merchant_id', loginRequired, updateMerchantById) // update merchant account information PRIVATE
 router.delete('/api/v1/merchants/:merchant_id/records/:record_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
 
 // USER ROUTES

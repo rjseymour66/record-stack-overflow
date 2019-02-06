@@ -1,8 +1,20 @@
 import mongoose from 'mongoose';
-import { ShippingSchema } from './userModel';
+import { ShippingSchema, BillingSchema } from './userModel';
 
 const Schema = mongoose.Schema;
 
+// user billing
+
+// must include merchant ID
+
+export const ProductInfoSchema = new Schema({
+  record_id: {
+    type: String,
+    required: 'Enter the record id'
+  },
+  _id: false,
+  id: false
+})
 
 export const CustomerSchema = new Schema({
   username: {
@@ -25,32 +37,58 @@ export const CustomerSchema = new Schema({
   id: false
 })
 
+export const SellerSchema = new Schema ({
+  merchant_id: {
+    type: String,
+    required: 'Enter the merchant id'
+  },
+  companyName: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+    unique: true
+  },
+  primaryContact: {
+    type: String,
+    required: true,
+    trim: true,
+    minlength: 1,
+  },
+  phoneNumber: {
+    type: String,
+    required: true,
+    minLength: 10,
+    unique: true
+  },
+  _id: false,
+  id: false
+})
 
 export const OrderSchema = new Schema ({
   status: {
     type: String,
-    default: 'Order'
+    default: 'In progress'
   },
-  record_id: {
-    type: String,
-    required: 'Enter the album id'
-  },
-  price: {
-    type: String,
-    required: 'Enter the price'
-  },
+
+  product_info: [ProductInfoSchema],
   
-  customer: [CustomerSchema],
+  customer_info: [CustomerSchema],
+
+  seller_info: [SellerSchema],
 
   shipping_info: [ShippingSchema],
+
+  billing_info: [BillingSchema],
 
   created_date: {
     type: Date,
     default: Date.now
   },
-  comments: [{
-    type: String
-  }],
+  comments: {
+    type: [String],
+    default: undefined
+  },
   _createdBy: {
     type: String,
     required: true,

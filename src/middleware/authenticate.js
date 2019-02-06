@@ -25,6 +25,14 @@ export const registerUser = (req, res) => {
       shipping_city: req.body.shipping_city,
       shipping_state: req.body.shipping_state,
       shipping_zip: req.body.shipping_zip
+    }],
+    billing_info: [{
+      paypal_email: req.body.paypal_email,
+      billing_address1: req.body.billing_address1,
+      billing_address2: req.body.billing_address2,
+      billing_city: req.body.billing_city,
+      billing_state: req.body.billing_state,
+      billing_zip: req.body.billing_zip
     }]    
   });
   newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
@@ -68,7 +76,20 @@ export const login = (req, res) => {
 // REGISTER NEW MERCHANT
 
 export const registerMerchant = (req, res) => {
-  const newMerchant = new Merchant(req.body);
+  const newMerchant = new Merchant({
+    companyName: req.body.companyName,
+    primaryContact: req.body.primaryContact,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    password: req.body.password,
+    address: [{
+      shipping_address1: req.body.shipping_address1,
+      shipping_address2: req.body.shipping_address2,
+      shipping_city: req.body.shipping_city,
+      shipping_state: req.body.shipping_state,
+      shipping_zip: req.body.shipping_zip
+    }]
+  });
   newMerchant.hashPassword = bcrypt.hashSync(req.body.password, 10);
   newMerchant.save((err, merchant) => {
     if (err) {
@@ -121,7 +142,7 @@ export const loginRequired = (req, res, next) => {
 
 
 export const verifyMerchant = (req, res, next) => {
-  if(!req.user.isMerchant) {
+  if(!req.user.merchantAccount) {
     res.status(404).json({Error : 'Insufficient privileges'})
   } else
     next();

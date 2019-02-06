@@ -4,6 +4,37 @@ import validator from 'validator';
 
 const Schema = mongoose.Schema;
 
+// billing info
+  // add paypal email address
+
+export const BillingSchema = new Schema({
+  paypal_email: {
+    type: String,
+    required: 'Enter your PayPal account email'
+  },
+  billing_address1: {
+    type: String,
+    required: 'Address 1 required'
+  },
+  billing_address2: {
+    type: String,
+    default: undefined,
+  },
+  billing_city: {
+    type: String,
+    required: 'City required'
+  },
+  billing_state: {
+    type: String,
+    required: 'State required'
+  },
+  billing_zip: {
+    type: String,
+    required: 'Zip code required'
+  },
+  _id: false,
+  id: false
+})
 
 export const ShippingSchema = new Schema({
   shipping_address1: {
@@ -62,6 +93,8 @@ export const UserSchema = new Schema({
   },
 
   shipping_info: [ShippingSchema],
+
+  billing_info: [BillingSchema],
   
   created_date: {
     type: Date,

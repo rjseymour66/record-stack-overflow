@@ -29,9 +29,10 @@ export const RecordSchema = new Schema ({
     type: Date,
     default: Date.now
   },
-  comments: [{
-    type: String
-  }],
+  comments: {
+    type: [String],
+    default: undefined
+  },
   _createdBy: {
     type: String,
     required: true

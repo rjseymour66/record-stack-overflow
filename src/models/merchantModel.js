@@ -4,10 +4,14 @@ import validator from 'validator';
 import { ShippingSchema } from './userModel';
 
 
+// company information
+// 
+
+
 const Schema = mongoose.Schema;
 
 export const MerchantSchema = new Schema({
-  isMerchant: {
+  merchantAccount: {
     type: Boolean,
     default: true
   },
