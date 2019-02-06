@@ -91,42 +91,4 @@ router.get('/', (req, res) => {
 
 
 
-
-
-
-
-// const Merchant = mongoose.model('Merchant', MerchantSchema);
-
-// USER ROUTES - MEAD
-// router.post('/users', createUser)
-// router.get('/users/me', authenticateUser, (req, res) => {
-//   let token = req.header('Authorization');
-
-//   Merchant.findByToken(token).then((user) => {
-//     if(!user) {
-//       return Promise.reject();
-//     }
-//   })
-
-//   res.send(req.user);
-// }).catch((e) => {
-//   res.status(401).send();
-// })
-
-// router.post('/users', (req, res) => {
-//   let email = req.body.email;
-//   let password = req.body.password;
-//   let body = { email, password}
-//   let user = new Merchant(body)
-
-//   user.save().then(() => {
-//     return user.generateAuthToken();
-//   }).then((token) => {
-//     res.header('Authorization', token).send(user);
-//   }).catch((e) => {
-//     res.status(400).send(e)
-//   })
-// })
-
-
 export default router;
