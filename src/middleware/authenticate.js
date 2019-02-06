@@ -7,7 +7,6 @@ import { RecordSchema } from '../models/recordModel';
 
 const User = mongoose.model('User', UserSchema);
 const Merchant = mongoose.model('Merchant', MerchantSchema)
-const Record = mongoose.model('Record', RecordSchema)
 
 
 // REGISTER NEW USER
@@ -160,13 +159,24 @@ export const createdBy = (req, res, next) => {
   console.log('*****************  Record ID', recId);
 
   if(merchId !== userId){
-    res.status(404).json({ ERROR: "Insufficient privileges" })  } else {
+    res.status(404).json({ ERROR: "Insufficient privileges" })  
+  } else {
       next();
   }
 }
 
 export const orderedBy = (req, res, next) => {
-  
+  const userParam = req.params.user_id
+  const userId = req.user._id
+
+  console.log('*****************    User ID', userId);
+  console.log('*****************  Record ID', userParam);
+
+  if(userParam !== userId){
+    res.status(404).json({ ERROR: "Insufficient privileges" })  
+  } else {
+      next();
+  }
 }
 
 

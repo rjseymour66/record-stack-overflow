@@ -84,12 +84,12 @@ export const getAllOrders = (req, res) => {
   const limit = parseInt(req.query.limit)
   const offset = parseInt(req.query.offset)
   const lastName = req.query.lastName
-  const lastNameSort = { lastName : 1 }
+  const sort = { lastName : req.query.lastname }
 
     if(lastName) {
       Order.find({ customer_lastName : lastName })
       .limit(limit)
-      .sort(lastNameSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {
@@ -102,7 +102,7 @@ export const getAllOrders = (req, res) => {
     } else {
       Order.find()
       .limit(limit)
-      .sort(lastNameSort)
+      .sort(sort)
       .skip(offset)
       .exec((err, data) => {
         if (err) {

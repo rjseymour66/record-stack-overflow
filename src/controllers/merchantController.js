@@ -41,7 +41,10 @@ export const getAllMerchantOrders = (req, res) => {
   const merchant = req.params.merchant_id
 
   Order.find({ merchant_id: merchant })
-    .exec((err, orders) => {
+  .limit(limit)
+  .sort(sort)
+  .skip(offset)
+  .exec((err, orders) => {
       if(err) {
         res.status(400).json({ ERROR: "Check merchant id" })
       } else {
@@ -96,9 +99,6 @@ export const updateMerchantById = (req, res) => {
   const merchant_id = { _id: req.params.merchant_id };
   const updatedInfo = req.body;
   const merchId = req.user._id;
-
-  console.log('XXXXXXXXXXXXX', merchParam);
-  console.log('XXXXXXXXXXXXX', merchId);
 
   Merchant.findOneAndUpdate(merchant_id, updatedInfo, { new: true }, (err, merchant) =>{
     if(merchId !== merchParam) {

@@ -14,7 +14,6 @@ import {
   getOrder,
   getAllOrders,
   updateOrderById,
-  deleteOrder,
 } from '../controllers/orderController';
 
 // MERCHANT CONTROLLER
@@ -26,6 +25,14 @@ import {
   deleteRecord
 } from '../controllers/merchantController'
 
+// USER CONTROLLER
+import {
+  getUserInfo,
+  updateUserById,
+  getUserOrders,
+  cancelOrder
+} from '../controllers/userController'
+
 // MIDDLEWARE
 import { 
   login,
@@ -34,7 +41,8 @@ import {
   loginRequired,
   loginMerchant,
   verifyMerchant,
-  createdBy
+  createdBy,
+  orderedBy
 } from '../middleware/authenticate';
 
 const router = express.Router();
@@ -60,10 +68,10 @@ router.put('/api/v1/merchants/:merchant_id', loginRequired, updateMerchantById) 
 router.delete('/api/v1/merchants/:merchant_id/records/:record_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
 
 // USER ROUTES
-// router.get('/api/v1/users/:user_id', loginRequired, updateUser) // get user info PRIVATE
-// router.put('/api/v1/users/:user_id') // update user info PRIVATE
-// router.put('/api/v1/users/:user_id/orders/:order_id') // get orders by user PRIVATE
-// router.delete('/api/v1/users/:user_id/orders/:order_id) // delete order for user
+router.get('/api/v1/users/:user_id', loginRequired, getUserInfo) // get user info PRIVATE
+router.put('/api/v1/users/:user_id', loginRequired, updateUserById) // update user info PRIVATE
+router.get('/api/v1/users/:user_id/orders', loginRequired, getUserOrders) // get orders by user PRIVATE
+router.delete('/api/v1/users/:user_id/orders/:order_id', loginRequired, orderedBy, cancelOrder) // delete order for user
 
 
 // AUTHORIZATION ROUTES / USER ROUTES
