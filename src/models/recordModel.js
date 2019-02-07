@@ -5,10 +5,6 @@ let date = new Date();
 
 
 export const RecordSchema = new Schema ({
-  available: {
-    type: Boolean,
-    default: true
-  },
   artist: {
     type: String,
     required: 'Enter the artist name'
