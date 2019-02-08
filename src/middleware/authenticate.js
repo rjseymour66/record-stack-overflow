@@ -116,7 +116,7 @@ export const loginMerchant = (req, res) => {
       if (!merchant.comparePassword(req.body.password, merchant.hashPassword)) {
         res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
       } else {
-        return res.json({ 'secret token' : jwt.sign({ isMerchant: merchant.isMerchant, companyName: merchant.companyName, primaryContact: merchant.primaryContact, email: merchant.email, _id: merchant.id }, process.env.JWT_SECRET) });
+        return res.json({ 'secret token' : jwt.sign({ merchantAccount: merchant.merchantAccount, companyName: merchant.companyName, primaryContact: merchant.primaryContact, email: merchant.email, _id: merchant.id }, process.env.JWT_SECRET) });
       }
     }
   });
@@ -141,6 +141,8 @@ export const loginRequired = (req, res, next) => {
 
 
 export const verifyMerchant = (req, res, next) => {
+
+  console.log('*********** merchantAccount', req.user.merchantAccount);
   if(!req.user.merchantAccount) {
     res.status(404).json({Error : 'Insufficient privileges'})
   } else

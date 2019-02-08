@@ -33,7 +33,7 @@ export const createOrder = (req, res) => {
       billing_state: req.body.billing_state,
       billing_zip: req.body.billing_zip
     }],
-    seller_info: [{
+    merchant_info: [{
       merchant_id: req.body.merchant_id,
       companyName: req.body.companyName,
       primaryContact: req.body.primaryContact,
@@ -61,7 +61,9 @@ export const getOrder = (req, res) => {
   Order.findById(id)
   .exec((err, order) => {
     if(err) {
-      res.status(400).json({ ERROR: "Order not found" })
+      res.status(400).json({ 
+        ERROR: "Order not found" 
+      })
     } else {
       res.json(order)
     }
@@ -83,7 +85,9 @@ export const getAllOrders = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed"})
+          res.status(400).json({ 
+            ERROR: "Request failed"
+          })
         } else {
           res.json(data)
         }
@@ -96,7 +100,9 @@ export const getAllOrders = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed."})
+          res.status(400).json({ 
+            ERROR: "Request failed."
+          })
         } else {
           res.json(data)
         }
@@ -112,7 +118,9 @@ export const getAllOrders = (req, res) => {
     const userId = req.user._id
     Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, order) => {
       if (userId !== order._createdBy) {
-        res.status(404).json({ message: "Order not found. Check order id."})
+        res.status(404).json({ 
+          error: "Order not found. Check order id."
+      })
       } else {
         res.json(order)
       }
@@ -124,48 +132,14 @@ export const getAllOrders = (req, res) => {
 export const deleteOrder = (req, res) => {
   Order.remove({ _id: req.params.order_id }, (err, data) => {
     if (err) {
-      res.status(404).json({ ERROR: "Order not found. Check order id."})
+      res.status(404).json({ 
+        error: "Order not found. Check order id."
+      })
     } else {
-      res.json({SUCCESS: 'Order object deleted'})
+      res.json({
+        success: 'Order object deleted'
+      })
     }
   });
 };
 
-
-
-
-
-// export const updateRecordById = (req, res) => {
-//   const id = { _id: req.params.record_id };
-  
-
-//   Record.findOneAndUpdate(id, { sold: true }, { new: true }, (err, data) => {
-//     if (err) {
-//       res.status(404).json({ message: "Record not found. Check record id." })
-//     } else {
-//       res.json(data)
-//     }
-//     let order = new Order(req.body);
-//     order.save((err, orderInfo) => {
-//       if (err) {
-//         return res.status(400).send({ message: "Order not saved." });
-//       } else {
-//         return res.json({ message: 'Success - record created!', 'New Record Information': orderInfo })
-//       }
-//     })
-//   }
-// )
-
-// }
-
-// export const updateRecordById = (req, res) => {
-//   const id = {_id: req.params.record_id};
-//   const updatedInfo = req.body;
-//   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, contact) => {
-//     if (err) {
-//       res.status(404).json({ message: "Record not found. Check record id."})
-  //   } else {
-  //     res.json(contact)
-  //   }
-  // });
-// };
