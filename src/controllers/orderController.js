@@ -42,13 +42,13 @@ export const createOrder = (req, res) => {
     comments: req.body.comments,
     _createdBy: req.user._id
   });
-  order.save((err, order_info) => {
+  order.save((err, order) => {
     if (err) {
       return res.status(400).send({
         message: err
       });
     } else {
-      return res.json({order_info});
+      return res.json({order});
     }
   });
 };
