@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 });
 
 // EJS
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 
 // helmet setup
 app.use(helmet());
@@ -68,7 +68,7 @@ const limiter = new RateLimit({
 app.use(morgan('tiny'))
 
 // serve static files
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 // router
 app.use(router)
