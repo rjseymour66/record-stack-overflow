@@ -19,8 +19,7 @@ export const createRecord = (req, res) => {
   record.save((err, data) => {
     if (err) {
       return res.status(400).json({ 
-        error_message: "Request failed",
-        status_code: 400
+        error_message: "Request failed"
       })
     } else {
       return res.json({ SUCCESS: 'Record created', 'New Record Information': data });
@@ -44,8 +43,7 @@ export const getAllRecords = (req, res) => {
       .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
-            error_message: "Request failed",
-            status_code: 400
+            error_message: "Request failed"
           })
         } else {
           res.json(record)
@@ -59,8 +57,7 @@ export const getAllRecords = (req, res) => {
       .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
-            error_message: "Request failed",
-            status_code: 400
+            error_message: "Request failed"
           })
         } else {
           res.json(record)
@@ -75,8 +72,7 @@ export const getAllRecords = (req, res) => {
       .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
-            error_message: "Request failed",
-            status_code: 400
+            error_message: "Request failed"
           })
         } else {
           res.json(record)
@@ -90,8 +86,7 @@ export const getAllRecords = (req, res) => {
       .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
-            error_message: "Request failed",
-            status_code: 400
+            error_message: "Request failed"
           })
         } else {
           res.json(record)
@@ -108,8 +103,7 @@ export const updateRecordById = (req, res) => {
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, record) =>{
     if(merchId !== record._createdBy) {
       res.status(404).json({ 
-        error_message : "Record not found. Check record ID",
-        status_code: 404 
+        error_message : "Record not found. Check record ID"
       })
     } else {
     res.json(record)
