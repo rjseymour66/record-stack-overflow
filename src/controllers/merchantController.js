@@ -24,7 +24,8 @@ export const getAllMerchantRecords = (req, res) => {
   .exec((err, data) => {
     if(err) {
       res.status(400).json({ 
-        error: 'Request failed'
+        error_message: 'Request failed',
+        status_code: 400
       })
     } else {
       res.json(data)
@@ -132,9 +133,14 @@ export const deleteRecord = (req, res) => {
   const recId = { _id: req.params.record_id }
   Record.remove(recId, (err, data) => {
     if(err) {
-      res.status(404).json({ ERROR: "Record not found" })
+      res.status(404).json({ 
+        error_message: "Record not found. Check record ID.",
+        status_code: 404 
+      })
     } else {
-      res.json({ SUCCESS: 'Record deleted' })
+      res.json({ 
+        message: 'Record deleted' 
+      })
     }
   })
 };
