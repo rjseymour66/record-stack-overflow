@@ -18,14 +18,10 @@ export const createRecord = (req, res) => {
   })
   record.save((err, data) => {
     if (err) {
-<<<<<<< HEAD
       return res.status(400).json({ 
         error_message: "Request failed",
         status_code: 400
       })
-=======
-      return res.status(400).json({ ERROR: "Request failed." })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
     } else {
       return res.json({ SUCCESS: 'Record created', 'New Record Information': data });
     }
@@ -47,14 +43,10 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, record) => {
         if (err) {
-<<<<<<< HEAD
           res.status(400).json({ 
             error_message: "Request failed",
             status_code: 400
           })
-=======
-          res.status(400).json({ ERROR: "Request failed" })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
         } else {
           res.json(record)
         }
@@ -66,14 +58,10 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, record) => {
         if (err) {
-<<<<<<< HEAD
           res.status(400).json({ 
             error_message: "Request failed",
             status_code: 400
           })
-=======
-          res.status(400).json({ ERROR: "Request failed" })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
         } else {
           res.json(record)
         }
@@ -86,14 +74,10 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, record) => {
         if (err) {
-<<<<<<< HEAD
           res.status(400).json({ 
             error_message: "Request failed",
             status_code: 400
           })
-=======
-          res.status(400).json({ ERROR: "Request failed" })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
         } else {
           res.json(record)
         }
@@ -105,14 +89,10 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, record) => {
         if (err) {
-<<<<<<< HEAD
           res.status(400).json({ 
             error_message: "Request failed",
             status_code: 400
           })
-=======
-          res.status(400).json({ ERROR: "Request failed" })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
         } else {
           res.json(record)
         }
@@ -127,14 +107,10 @@ export const updateRecordById = (req, res) => {
   const merchId = req.user._id;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, record) =>{
     if(merchId !== record._createdBy) {
-<<<<<<< HEAD
       res.status(404).json({ 
         error_message : "Record not found. Check record ID",
         status_code: 404 
       })
-=======
-      res.status(404).json({ ERROR: "Record not found. Check record id." })
->>>>>>> parent of 68f9a02... Change user to customer, rearranged routes page, fixed verifyMerchant auth middleware
     } else {
     res.json(record)
     }
