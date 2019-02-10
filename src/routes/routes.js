@@ -97,9 +97,9 @@ router.post('/auth/login/merchant', loginMerchant)
 
 
 // VIEW ROUTES
-// router.get('/', (req, res) => {
-//   res.render('home')
-// });
+router.get('/', (req, res) => {
+  res.json("welcome")
+});
 
 
 
