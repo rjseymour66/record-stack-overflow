@@ -1,9 +1,6 @@
 import express from 'express';
 
 
-// TEST CONTROLLER
-import { createTest } from '../controllers/testController';
-
 // RECORD CONTROLLER
 import {
   createRecord,
@@ -59,7 +56,7 @@ router.put('/api/v1/records/:record_id', verifyMerchant, loginRequired, updateRe
 router.delete('/api/v1/records/:record_id/merchants/:merchant_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
 
 // TEST ROUTE
-router.post('/api/v1/test/records/:record_id', loginRequired, createTest); // DONE
+// router.post('/api/v1/test/records/:record_id', loginRequired, createTest); // DONE
 
 
 
