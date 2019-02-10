@@ -20,7 +20,6 @@ export const MerchantSchema = new Schema({
     required: true,
     trim: true,
     minlength: 1,
-    unique: true
   },
   primaryContact: {
     type: String,
@@ -43,7 +42,6 @@ export const MerchantSchema = new Schema({
     type: String,
     required: true,
     minLength: 10,
-    unique: true
   },
   hashPassword: {
     type: String,

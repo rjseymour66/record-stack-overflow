@@ -36,13 +36,14 @@ export const BillingSchema = new Schema({
   id: false
 })
 
-export const ShippingSchema = new Schema({
+export const ShippingSchema = new Schema( {
   shipping_address1: {
     type: String,
     required: 'Address 1 required'
   },
   shipping_address2: {
     type: String,
+    default: undefined
   },
   shipping_city: {
     type: String,
