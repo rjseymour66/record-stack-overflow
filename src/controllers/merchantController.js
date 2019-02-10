@@ -23,9 +23,7 @@ export const getAllMerchantRecords = (req, res) => {
   .skip(offset)
   .exec((err, data) => {
     if(err) {
-      res.status(400).json({ 
-        error: 'Request failed'
-      })
+      res.status(400).json({error: "Request failed" })
     } else {
       res.json(data)
     }
