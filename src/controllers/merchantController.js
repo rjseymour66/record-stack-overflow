@@ -23,7 +23,9 @@ export const getAllMerchantRecords = (req, res) => {
   .skip(offset)
   .exec((err, data) => {
     if(err) {
-      res.status(400).json({ ERROR: 'Request failed'})
+      res.status(400).json({ 
+        error: 'Request failed'
+      })
     } else {
       res.json(data)
     }
@@ -32,7 +34,7 @@ export const getAllMerchantRecords = (req, res) => {
 
 
 
-// router.get('/api/v1/merchant/:merchant_id/orders', loginRequired, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBY
+// router.get('/api/v1/orders/merchant/:merchant_id', loginRequired, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBY
 
 export const getAllMerchantOrders = (req, res) => {
   const limit = parseInt(req.query.limit)
@@ -46,7 +48,9 @@ export const getAllMerchantOrders = (req, res) => {
   .skip(offset)
   .exec((err, orders) => {
       if(err) {
-        res.status(400).json({ ERROR: "Check merchant id" })
+        res.status(400).json({ 
+          error: "Check merchant id" 
+        })
       } else {
         res.json(orders)
       }
@@ -66,7 +70,9 @@ export const getMerchant = (req, res) => {
   Merchant.findById(merchId)
     .exec((err, merchant) => {
       if(err) {
-        res.status(400).json({ ERROR: "Check merchant id" })
+        res.status(400).json({ 
+          error: "Check merchant id" 
+        })
       } else {
         res.json({
           companyName: merchant.companyName,
@@ -102,7 +108,9 @@ export const updateMerchantById = (req, res) => {
 
   Merchant.findOneAndUpdate(merchant_id, updatedInfo, { new: true }, (err, merchant) =>{
     if(merchId !== merchParam) {
-      res.status(404).json({ ERROR: "Insufficient privileges" })
+      res.status(404).json({ 
+        error: "Insufficient privileges" 
+      })
     } else {
     res.json(merchant)
     }
@@ -130,10 +138,3 @@ export const deleteRecord = (req, res) => {
     }
   })
 };
-
-
-
-
-
-
-

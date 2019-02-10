@@ -16,11 +16,13 @@ export const createRecord = (req, res) => {
     comments: req.body.comments,
     _createdBy: req.user._id
   })
-  record.save((err, data) => {
+  record.save((err, record) => {
     if (err) {
-      return res.status(400).json({ ERROR: "Request failed." })
+      return res.status(400).json({ 
+        error_message: "Request failed." 
+      })
     } else {
-      return res.json({ SUCCESS: 'Record created', 'New Record Information': data });
+      return res.json(record);
     }
   });
 };
@@ -40,7 +42,9 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed" })
+          res.status(400).json({ 
+            ERROR: "Request failed" 
+          })
         } else {
           res.json(data)
         }
@@ -52,7 +56,9 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed" })
+          res.status(400).json({ 
+            ERROR: "Request failed" 
+          })
         } else {
           res.json(data)
         }
@@ -65,7 +71,9 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed" })
+          res.status(400).json({ 
+            ERROR: "Request failed" 
+          })
         } else {
           res.json(data)
         }
@@ -77,7 +85,9 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({ ERROR: "Request failed" })
+          res.status(400).json({ 
+            ERROR: "Request failed" 
+          })
         } else {
           res.json(data)
         }
@@ -92,7 +102,9 @@ export const updateRecordById = (req, res) => {
   const merchId = req.user._id;
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, record) =>{
     if(merchId !== record._createdBy) {
-      res.status(404).json({ ERROR: "Record not found. Check record id." })
+      res.status(404).json({ 
+        ERROR: "Record not found. Check record id." 
+      })
     } else {
     res.json(record)
     }

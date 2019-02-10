@@ -61,4 +61,3 @@ export const MerchantSchema = new Schema({
 MerchantSchema.methods.comparePassword = (password, hashPassword) => {
   return bcrypt.compareSync(password, hashPassword)
 };
-

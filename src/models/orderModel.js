@@ -75,9 +75,9 @@ export const OrderSchema = new Schema ({
   
   customer_info: [CustomerSchema],
 
-  seller_info: [SellerSchema],
-
   shipping_info: [ShippingSchema],
+
+  merchant_info: [SellerSchema],
 
   billing_info: [BillingSchema],
 

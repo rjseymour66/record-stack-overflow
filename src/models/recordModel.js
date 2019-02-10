@@ -49,5 +49,3 @@ RecordSchema.pre('exec', function(next) {
     next();
   }
 })
-
-// mongoose.Schema.Types.ObjectId
