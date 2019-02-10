@@ -4,8 +4,10 @@ import { OrderSchema } from '../models/orderModel';
 // require model
 const Order = mongoose.model('Order', OrderSchema);
 
+
 // CREATE / POST NEW ORDER
 export const createOrder = (req, res) => {
+
   let order = new Order({
     product_info: [{
       record_id: req.params.record_id,
