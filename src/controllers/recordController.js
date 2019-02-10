@@ -14,7 +14,7 @@ export const createRecord = (req, res) => {
     price: req.body.price,
     condition: req.body.condition,
     comments: req.body.comments,
-    _createdBy: req.user._id
+    _createdBy: req.user
   })
   record.save((err, record) => {
     if (err) {
@@ -40,13 +40,13 @@ export const getAllRecords = (req, res) => {
       .limit(limit)
       .sort(sort)
       .skip(offset)
-      .exec((err, data) => {
+      .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
             ERROR: "Request failed" 
           })
         } else {
-          res.json(data)
+          res.json(record)
         }
       })
   } else if (companyName) {
@@ -54,13 +54,13 @@ export const getAllRecords = (req, res) => {
       .limit(limit)
       .sort(sort)
       .skip(offset)
-      .exec((err, data) => {
+      .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
             ERROR: "Request failed" 
           })
         } else {
-          res.json(data)
+          res.json(record)
         }
       })
 
@@ -69,13 +69,13 @@ export const getAllRecords = (req, res) => {
       .limit(limit)
       .sort(sort)
       .skip(offset)
-      .exec((err, data) => {
+      .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
             ERROR: "Request failed" 
           })
         } else {
-          res.json(data)
+          res.json(record)
         }
       })
   } else {
@@ -83,13 +83,13 @@ export const getAllRecords = (req, res) => {
       .limit(limit)
       .sort(sort)
       .skip(offset)
-      .exec((err, data) => {
+      .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
             ERROR: "Request failed" 
           })
         } else {
-          res.json(data)
+          res.json(record)
         }
       })
   }

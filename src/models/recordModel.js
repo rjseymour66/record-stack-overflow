@@ -5,10 +5,6 @@ let date = new Date();
 
 
 export const RecordSchema = new Schema ({
-  available: {
-    type: Boolean,
-    default: true
-  },
   artist: {
     type: String,
     required: 'Enter the artist name'
@@ -34,7 +30,8 @@ export const RecordSchema = new Schema ({
     default: undefined
   },
   _createdBy: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Merchant',
     required: true
   }
 });
