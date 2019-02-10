@@ -30,7 +30,8 @@ export const RecordSchema = new Schema ({
     default: undefined
   },
   _createdBy: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Merchant',
     required: true
   }
 });

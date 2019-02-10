@@ -14,7 +14,7 @@ export const createRecord = (req, res) => {
     price: req.body.price,
     condition: req.body.condition,
     comments: req.body.comments,
-    _createdBy: req.user._id
+    _createdBy: req.user
   })
   record.save((err, record) => {
     if (err) {

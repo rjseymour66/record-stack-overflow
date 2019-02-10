@@ -51,7 +51,14 @@ export const updateUserById = (req, res) => {
 export const getUserOrders = (req, res) => {
   const userId = req.params.customer_id
 
+  const limit = parseInt(req.query.limit)
+  const sort = { created_date: req.query.sort }
+  const offset = parseInt(req.query.offset)
+
   Order.find({ _createdBy : userId})
+  .limit(limit)
+  .sort(sort)
+  .skip(offset)
   .exec((err, orders) => {
     if(userId !== req.user._id) {
       res.status(404).json({ 
