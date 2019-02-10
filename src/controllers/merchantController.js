@@ -133,7 +133,7 @@ export const deleteRecord = (req, res) => {
   Record.remove(recId, (err, data) => {
     if(err) {
       res.status(404).json({ 
-        error_message: "Record not found. Check record ID."
+        error_message: "Record was not found. Check record ID."
       })
     } else {
       res.json({ 
