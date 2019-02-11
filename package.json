@@ -8,8 +8,7 @@
     "build-babel": "babel -d ./build ./src -s",
     "build": "npm run clean && npm run build-babel",
     "start": "npm run build && node ./build/app.js",
-    "dev": "nodemon src/app.js --exec babel-node -e js",
-    "test": "export NODE_ENV=test && mocha server/**/*.test.js"
+    "dev": "nodemon src/app.js --exec babel-node -e js"
   },
   "author": "Ryan Seymour",
   "license": "ISC",
