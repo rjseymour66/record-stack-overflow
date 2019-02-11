@@ -10,7 +10,7 @@ const Schema = mongoose.Schema;
 export const ProductInfoSchema = new Schema({
   record_id: {
     type: String,
-    required: 'Enter the record id'
+    required: 'Please enter the record id'
   },
   _id: false,
   id: false
