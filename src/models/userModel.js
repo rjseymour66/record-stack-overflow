@@ -110,27 +110,3 @@ UserSchema.methods.comparePassword = (password, hashPassword) => {
 };
 
 
-
-
-// {
-// 	"username": "username",
-// 	"firstName": "First",
-// 	"lastName": "Name",
-// 	"email": "email@example.com",
-// 	"password": "password123",
-// 	"shipping_info": {
-// 		"address1": "123 Shipping Lane",
-// 		"address2": "Apt. #100",
-// 		"city": "Raleigh",
-// 		"state": "NC",
-// 		"zip": "27615"
-// 	},
-// 	"billing_info": {
-// 		"address1": "123 Billing Drive",
-// 		"address2": "Ste. #550",
-// 		"city": "Boston",
-// 		"state": "MA",
-// 		"zip": "02101"
-// 	}
-
-// }

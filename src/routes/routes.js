@@ -50,13 +50,11 @@ const router = express.Router();
 
 // RECORD ROUTES
 router.post('/api/v1/records',  verifyMerchant, loginRequired, createRecord); // DONE
-router.get('/api/v1/records/merchants/:merchant_id', loginRequired, getAllMerchantRecords) // get all records by merchant
 router.get('/api/v1/records', loginRequired, getAllRecords); // DONE 
 router.get('/api/v1/records/merchants/:merchant_id', loginRequired, getAllMerchantRecords) // get all records by merchant
 router.put('/api/v1/records/:record_id', verifyMerchant, loginRequired, updateRecordById) // DONE
 router.delete('/api/v1/records/:record_id/merchants/:merchant_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
 
-router.delete('/api/v1/records/:record_id/merchants/:merchant_id', loginRequired, createdBy, deleteRecord) // delete record PRIVATE
 
 // TEST ROUTE
 // router.post('/api/v1/test/records/:record_id', loginRequired, createTest); // DONE
@@ -97,13 +95,13 @@ router.get('/api/v1/customers/:customer_id/orders', loginRequired, getUserOrders
 
 
 // AUTHORIZATION ROUTES / CUSTOMER ROUTES
-router.post('/auth/register/customer', registerUser)
-router.post('/auth/login/customer', login)
+router.post('/auth/register/customer', registerUser) // WORKS
+router.post('/auth/login/customer', login) // WORKS
 
 
 // AUTHORIZATION ROUTES / MERCHANT
-router.post('/auth/register/merchant', registerMerchant)
-router.post('/auth/login/merchant', loginMerchant)
+router.post('/auth/register/merchant', registerMerchant) // WORKS
+router.post('/auth/login/merchant', loginMerchant) // WORKS
 
 
 // VIEW ROUTES
