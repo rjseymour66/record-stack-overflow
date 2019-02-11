@@ -10,6 +10,7 @@ import { ShippingSchema } from './userModel';
 
 const Schema = mongoose.Schema;
 
+
 export const MerchantSchema = new Schema({
   merchantAccount: {
     type: Boolean,
@@ -58,6 +59,10 @@ export const MerchantSchema = new Schema({
   }
 })
 
+
 MerchantSchema.methods.comparePassword = (password, hashPassword) => {
   return bcrypt.compareSync(password, hashPassword)
 };
+
+
+

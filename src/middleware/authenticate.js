@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { UserSchema } from '../models/userModel';
 import { MerchantSchema } from '../models/merchantModel'
-import { RecordSchema } from '../models/recordModel';
 
 const User = mongoose.model('User', UserSchema);
 const Merchant = mongoose.model('Merchant', MerchantSchema)

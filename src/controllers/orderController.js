@@ -33,15 +33,9 @@ export const createOrder = (req, res) => {
       billing_state: req.body.billing_state,
       billing_zip: req.body.billing_zip
     }],
-    seller_info: [{
-      merchant_id: req.body.merchant_id,
-      companyName: req.body.companyName,
-      primaryContact: req.body.primaryContact,
-      phoneNumber: req.body.phoneNumber
-    }],
     comments: req.body.comments,
     _createdBy: req.user._id
-  });
+  })
   order.save((err, order) => {
     if (err) {
       return res.status(400).send({
@@ -142,3 +136,11 @@ export const deleteOrder = (req, res) => {
     }
   });
 };
+
+
+
+
+
+
+
+

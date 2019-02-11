@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 
 // must include merchant ID
 
+
 export const ProductInfoSchema = new Schema({
   record_id: {
     type: String,
@@ -37,33 +38,7 @@ export const CustomerSchema = new Schema({
   id: false
 })
 
-export const SellerSchema = new Schema ({
-  merchant_id: {
-    type: String,
-    required: 'Enter the merchant id'
-  },
-  companyName: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-    unique: true
-  },
-  primaryContact: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-  },
-  phoneNumber: {
-    type: String,
-    required: true,
-    minLength: 10,
-    unique: true
-  },
-  _id: false,
-  id: false
-})
+
 
 export const OrderSchema = new Schema ({
   status: {
@@ -76,8 +51,6 @@ export const OrderSchema = new Schema ({
   customer_info: [CustomerSchema],
 
   shipping_info: [ShippingSchema],
-
-  seller_info: [SellerSchema],
 
   billing_info: [BillingSchema],
 

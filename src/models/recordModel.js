@@ -30,19 +30,8 @@ export const RecordSchema = new Schema ({
     default: undefined
   },
   _createdBy: {
-    type: Schema.Types.ObjectId,
-    ref: 'Merchant',
+    type: String,
     required: true
   }
 });
 
-
-RecordSchema.pre('exec', function(next) {
-  let record = this;
-
-  if (record._createdBy !== req.user._id){
-    res.status(404).json({Error : 'Insufficient privileges'})
-  } else {
-    next();
-  }
-})

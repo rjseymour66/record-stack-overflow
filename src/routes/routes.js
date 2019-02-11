@@ -91,12 +91,12 @@ router.get('/api/v1/customers/:customer_id/orders', loginRequired, getUserOrders
 
 
 // CUSTOMER ROUTES
-router.get('/api/v1/customers/:customer_id', loginRequired, getUserInfo) // get user info PRIVATE
-router.put('/api/v1/customers/:customer_id', loginRequired, updateUserById) // update user info PRIVATE
+// router.get('/api/v1/customers/:customer_id', loginRequired, getUserInfo) // get user info PRIVATE
+// router.put('/api/v1/customers/:customer_id', loginRequired, updateUserById) // update user info PRIVATE
 
 
 
-// AUTHORIZATION ROUTES / USER ROUTES
+// AUTHORIZATION ROUTES / CUSTOMER ROUTES
 router.post('/auth/register/customer', registerUser)
 router.post('/auth/login/customer', login)
 
