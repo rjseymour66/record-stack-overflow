@@ -109,9 +109,9 @@ export const getAllOrders = (req, res) => {
   export const updateOrderById = (req, res) => {
     const id = { _id: req.params.order_id }
     const updatedInfo = req.body;
-    const userId = req.user._id
+    const customerId = req.user._id
     Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, order) => {
-      if (userId !== order._createdBy) {
+      if (customerId !== order._createdBy) {
         res.status(404).json({ 
           error: "Order not found. Check order id."
       })

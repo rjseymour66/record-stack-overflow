@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
-import { ShippingSchema } from './userModel';
+import { ShippingSchema } from './customerModel';
 
 
 // company information

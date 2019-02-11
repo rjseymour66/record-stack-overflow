@@ -25,18 +25,18 @@ import {
   deleteRecord
 } from '../controllers/merchantController'
 
-// USER CONTROLLER
+// CUSTOMER CONTROLLER
 import {
-  getUserInfo,
-  updateUserById,
-  getUserOrders,
+  getCustomerInfo,
+  updateCustomerById,
+  getCustomerOrders,
   cancelOrder
-} from '../controllers/userController'
+} from '../controllers/customerController'
 
 // MIDDLEWARE
 import { 
   login,
-  registerUser,
+  registerCustomer,
   registerMerchant,
   loginRequired,
   loginMerchant,
@@ -67,10 +67,10 @@ router.get('/api/v1/orders/:order_id', loginRequired, getOrder) // DONE
 // router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
 
 router.get('/api/v1/orders/merchants/:merchant_id', loginRequired, createdBy, getAllMerchantOrders) // get all orders by merchant PRIVATE
-router.get('/api/v1/orders/customers/:customer_id', loginRequired, getUserOrders) // get orders by user PRIVATE
+router.get('/api/v1/orders/customers/:customer_id', loginRequired, getCustomerOrders) // get orders by customer PRIVATE
 // router.get('/api/v1/orders', loginRequired, getAllOrders) // DONE
 router.put('/api/v1/orders/:order_id', loginRequired, updateOrderById) // DONE MAKE PRIVATE
-router.delete('/api/v1/orders/:order_id/customer/:customer_id', loginRequired, orderedBy, cancelOrder) // delete order for user
+router.delete('/api/v1/orders/:order_id/customer/:customer_id', loginRequired, orderedBy, cancelOrder) // delete order for customer
 
 
 
@@ -82,20 +82,20 @@ router.get('/api/v1/merchants/:merchant_id/orders', loginRequired, createdBy, ge
 
 
 // USER ROUTES
-router.get('/api/v1/customers/:customer_id', loginRequired, getUserInfo) // get user info PRIVATE
-router.put('/api/v1/customers/:customer_id', loginRequired, updateUserById) // update user info PRIVATE
-router.get('/api/v1/customers/:customer_id/orders', loginRequired, getUserOrders) // get orders by user PRIVATE
+router.get('/api/v1/customers/:customer_id', loginRequired, getCustomerInfo) // get Customer info PRIVATE
+router.put('/api/v1/customers/:customer_id', loginRequired, updateCustomerById) // update Customer info PRIVATE
+router.get('/api/v1/customers/:customer_id/orders', loginRequired, getCustomerOrders) // get orders by Customer PRIVATE
 
 
 
 // CUSTOMER ROUTES
-// router.get('/api/v1/customers/:customer_id', loginRequired, getUserInfo) // get user info PRIVATE
-// router.put('/api/v1/customers/:customer_id', loginRequired, updateUserById) // update user info PRIVATE
+// router.get('/api/v1/customers/:customer_id', loginRequired, getCustomerInfo) // get Customer info PRIVATE
+// router.put('/api/v1/customers/:customer_id', loginRequired, updateCustomerById) // update Customer info PRIVATE
 
 
 
 // AUTHORIZATION ROUTES / CUSTOMER ROUTES
-router.post('/auth/register/customer', registerUser) // WORKS
+router.post('/auth/register/customer', registerCustomer) // WORKS
 router.post('/auth/login/customer', login) // WORKS
 
 

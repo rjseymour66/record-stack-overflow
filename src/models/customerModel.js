@@ -61,7 +61,7 @@ export const ShippingSchema = new Schema({
   id: false
 })
 
-export const UserSchema = new Schema({
+export const CustomerSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -105,7 +105,7 @@ export const UserSchema = new Schema({
 
 
 
-UserSchema.methods.comparePassword = (password, hashPassword) => {
+CustomerSchema.methods.comparePassword = (password, hashPassword) => {
   return bcrypt.compareSync(password, hashPassword)
 };
 

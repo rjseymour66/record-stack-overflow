@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { ShippingSchema, BillingSchema } from './userModel';
+import { ShippingSchema, BillingSchema } from './customerModel';
 
 const Schema = mongoose.Schema;
 
-// user billing
+// customer billing
 
 // must include merchant ID
 

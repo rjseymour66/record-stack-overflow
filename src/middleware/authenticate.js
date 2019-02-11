@@ -1,17 +1,17 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { UserSchema } from '../models/userModel';
+import { CustomerSchema } from '../models/customerModel';
 import { MerchantSchema } from '../models/merchantModel'
 
-const User = mongoose.model('User', UserSchema);
+const Customer = mongoose.model('Customer', CustomerSchema);
 const Merchant = mongoose.model('Merchant', MerchantSchema)
 
 
-// REGISTER NEW USER
+// REGISTER NEW Customer
 
-export const registerUser = (req, res) => {
-  const newUser = new User({
+export const registerCustomer = (req, res) => {
+  const newCustomer = new Customer({
     username: req.body.username,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -33,37 +33,37 @@ export const registerUser = (req, res) => {
       billing_zip: req.body.billing_zip
     }]    
   });
-  newUser.hashPassword = bcrypt.hashSync(req.body.password, 10);
-  newUser.save((err, user) => {
+  newCustomer.hashPassword = bcrypt.hashSync(req.body.password, 10);
+  newCustomer.save((err, customer) => {
     if (err) {
       return res.status(400).send({
         message: err
       });
     } else {
-      user.hashPassword = undefined;
-      return res.json(user);
+      customer.hashPassword = undefined;
+      return res.json(customer);
     }
   })
 };
 
 
-// LOGIN USER GET TOKEN
+// LOGIN Customer GET TOKEN
 
 export const login = (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
+  Customer.findOne({ email: req.body.email }, (err, customer) => {
     if (err) throw err;
-    if (!user) {
-      res.status(401).json({ ERROR: 'Authentication failed. No user found.' });
-    } else if (user) {
-      if (!user.comparePassword(req.body.password, user.hashPassword)) {
+    if (!customer) {
+      res.status(401).json({ ERROR: 'Authentication failed. No customer found.' });
+    } else if (customer) {
+      if (!customer.comparePassword(req.body.password, customer.hashPassword)) {
         res.status(401).json({ ERROR: 'Authentication failed. Wrong password.' });
       } else {
         return res.json({ 'secret token' : jwt.sign({ 
-          email: user.email, 
-          username: user.username, 
-          _id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName }, process.env.JWT_SECRET) 
+          email: customer.email, 
+          username: customer.username, 
+          _id: customer.id,
+          firstName: customer.firstName,
+          lastName: customer.lastName }, process.env.JWT_SECRET) 
         });
       }
     }
@@ -123,7 +123,7 @@ export const loginMerchant = (req, res) => {
 
 
 
-// USER LOGIN REQUIRED
+// CUSTOMER LOGIN REQUIRED
 export const loginRequired = (req, res, next) => {
   if (req.user) {
 
