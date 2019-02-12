@@ -6,7 +6,7 @@ import RateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import router from './routes/routes';
-import './config/config';
+require('dotenv').config()
 
 
 
