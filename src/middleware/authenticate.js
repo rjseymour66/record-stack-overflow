@@ -129,7 +129,7 @@ export const loginRequired = (req, res, next) => {
 
     next();
   } else {
-    return res.status(401).json({ ERROR: 'Unauthorized user' });
+    return res.status(401).json({ error: 'Unauthorized user' });
   }
 };
 
@@ -143,7 +143,7 @@ export const verifyMerchant = (req, res, next) => {
 
   console.log('*********** merchantAccount', req.user.merchantAccount);
   if(!req.user.merchantAccount) {
-    res.status(404).json({Error : 'Insufficient privileges'})
+    res.status(404).json({error : 'Insufficient privileges'})
   } else
     next();
 }
@@ -160,14 +160,14 @@ export const createdBy = (req, res, next) => {
   console.log('*****************  Record ID', recId);
 
   if(merchId !== userId){
-    res.status(404).json({ ERROR: "Insufficient privileges" })  
+    res.status(404).json({ error: "Insufficient privileges" })  
   } else {
       next();
   }
 }
 
 export const orderedBy = (req, res, next) => {
-  const userParam = req.params.user_id
+  const userParam = req.params.customer_id
   const userId = req.user._id
 
   console.log('*****************    User ID', userId);

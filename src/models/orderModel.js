@@ -8,15 +8,6 @@ const Schema = mongoose.Schema;
 // must include merchant ID
 
 
-export const ProductInfoSchema = new Schema({
-  record_id: {
-    type: String,
-    required: 'Please enter the record id'
-  },
-  _id: false,
-  id: false
-})
-
 export const CustomerSchema = new Schema({
   username: {
     type: String,
@@ -45,9 +36,15 @@ export const OrderSchema = new Schema ({
     type: String,
     default: 'In progress'
   },
-
-  product_info: [ProductInfoSchema],
-  
+  record_id: {
+    type: String,
+    required: 'Please enter the record ID'
+  },
+  merchant_id: {
+    type: String,
+    required: 'Please enter the record ID'
+  },
+    
   customer_info: [CustomerSchema],
 
   shipping_info: [ShippingSchema],

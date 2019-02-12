@@ -17,7 +17,7 @@ export const getAllMerchantRecords = (req, res) => {
   const offset = parseInt(req.query.offset)
   const merchant = req.params.merchant_id
 
-  Record.find({ _id: merchant })
+  Record.find({ _createdBy: merchant })
   .limit(limit)
   .sort(sort)
   .skip(offset)
@@ -36,11 +36,11 @@ export const getAllMerchantRecords = (req, res) => {
 
 export const getAllMerchantOrders = (req, res) => {
   const limit = parseInt(req.query.limit)
-  const sort = { artist: req.query.sort }
+  const sort = { created_date : req.query.sort }
   const offset = parseInt(req.query.offset)
   const merchant = req.params.merchant_id
 
-  Order.find({ merchant_id: merchant })
+  Order.find( { merchant_id : merchant } )
   .limit(limit)
   .sort(sort)
   .skip(offset)
@@ -121,8 +121,6 @@ export const updateMerchantById = (req, res) => {
 
 
 
-// router.delete('/api/v1/merchant/:merchant_id/records/:record_id', loginRequired, deleteRecord) // delete record PRIVATE
-
 
 // DELETE RECORD BY ID
 
@@ -131,12 +129,10 @@ export const deleteRecord = (req, res) => {
   Record.remove(recId, (err, data) => {
     if(err) {
       res.status(404).json({ 
-        error_message: "Record was not found. Check record ID."
+        error: "Record was not found. Check record ID."
       })
     } else {
-      res.json({ 
-        message: 'Record deleted' 
-      })
+      res.json({  success: 'Record deleted'  })
     }
   })
 };

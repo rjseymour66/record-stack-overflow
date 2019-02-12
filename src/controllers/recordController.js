@@ -33,38 +33,8 @@ export const getAllRecords = (req, res) => {
   const sort = { artist: req.query.sort }
   const offset = parseInt(req.query.offset)
   const artist = req.query.artist
-  const companyName = req.query.companyName
 
-  if (artist && companyName) {
-    Record.find({ $and: [{ artist: artist }, { companyName: companyName }] })
-      .limit(limit)
-      .sort(sort)
-      .skip(offset)
-      .exec((err, record) => {
-        if (err) {
-          res.status(400).json({ 
-            ERROR: "Request failed" 
-          })
-        } else {
-          res.json(record)
-        }
-      })
-  } else if (companyName) {
-    Record.find({ companyName: companyName })
-      .limit(limit)
-      .sort(sort)
-      .skip(offset)
-      .exec((err, record) => {
-        if (err) {
-          res.status(400).json({ 
-            ERROR: "Request failed" 
-          })
-        } else {
-          res.json(record)
-        }
-      })
-
-  } else if (artist) {
+  if (artist) {
     Record.find({ artist: artist })
       .limit(limit)
       .sort(sort)
@@ -72,7 +42,7 @@ export const getAllRecords = (req, res) => {
       .exec((err, record) => {
         if (err) {
           res.status(400).json({ 
-            ERROR: "Request failed" 
+            error: "Request failed" 
           })
         } else {
           res.json(record)
@@ -85,9 +55,7 @@ export const getAllRecords = (req, res) => {
       .skip(offset)
       .exec((err, record) => {
         if (err) {
-          res.status(400).json({ 
-            ERROR: "Request failed" 
-          })
+          res.status(400).json({  error: "Request failed"  })
         } else {
           res.json(record)
         }
@@ -103,7 +71,7 @@ export const updateRecordById = (req, res) => {
   Record.findOneAndUpdate(id, updatedInfo, { new: true }, (err, record) =>{
     if(merchId !== record._createdBy) {
       res.status(404).json({ 
-        ERROR: "Record not found. Check record id." 
+        error: "Record not found. Check record id." 
       })
     } else {
     res.json(record)

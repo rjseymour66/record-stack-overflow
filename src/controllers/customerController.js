@@ -11,11 +11,11 @@ const Order = mongoose.model('Order', OrderSchema);
 export const getCustomerInfo = (req, res) => {
   const customerId = req.params.customer_id
 
-  Customer.find({ _id: customerId })
+  Customer.findById(customerId)
     .exec((err, customer) => {
-      if (err) {
+      if (customerId !== req.user._id) {
         res.status(400).json({ 
-          ERROR: 'Request failed. Check customer id'
+          error: 'Request failed. Check customer id'
         })
       } else {
         res.json(customer)
@@ -48,14 +48,14 @@ export const updateCustomerById = (req, res) => {
 
 // router.get('/api/v1/customers/:customer_id/orders') // get orders by customer PRIVATE - _createdBy === :customer_id
 
-export const getCustomerOrders = (req, res) => {
+export const getAllCustomerOrders = (req, res) => {
   const customerId = req.params.customer_id
 
   const limit = parseInt(req.query.limit)
   const sort = { created_date: req.query.sort }
   const offset = parseInt(req.query.offset)
 
-  Order.find({ _createdBy : customerId})
+  Order.find({ _createdBy : customerId })
   .limit(limit)
   .sort(sort)
   .skip(offset)

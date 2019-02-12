@@ -9,9 +9,8 @@ const Order = mongoose.model('Order', OrderSchema);
 export const createOrder = (req, res) => {
 
   let order = new Order({
-    product_info: [{
-      record_id: req.params.record_id,
-    }],
+    record_id: req.params.record_id,
+    merchant_id: req.params.merchant_id,
     customer_info: [{
       username: req.user.username,
       email: req.user.email,
@@ -38,11 +37,9 @@ export const createOrder = (req, res) => {
   })
   order.save((err, order) => {
     if (err) {
-      return res.status(400).send({
-        message: err
-      });
+      return res.status(400).send({ error: "order not created" });
     } else {
-      return res.json({order});
+      return res.json(order);
     }
   });
 };
@@ -55,9 +52,7 @@ export const getOrder = (req, res) => {
   Order.findById(id)
   .exec((err, order) => {
     if(err) {
-      res.status(400).json({ 
-        ERROR: "Order not found" 
-      })
+      res.status(400).json({ error_message: "Order not found", response_code: 404 })
     } else {
       res.json(order)
     }
@@ -109,9 +104,9 @@ export const getAllOrders = (req, res) => {
   export const updateOrderById = (req, res) => {
     const id = { _id: req.params.order_id }
     const updatedInfo = req.body;
-    const customerId = req.user._id
+    const merchantId = req.user._id
     Order.findOneAndUpdate(id, updatedInfo, { new: true }, (err, order) => {
-      if (customerId !== order._createdBy) {
+      if (merchantId !== order.merchant_id) {
         res.status(404).json({ 
           error: "Order not found. Check order id."
       })
@@ -124,7 +119,7 @@ export const getAllOrders = (req, res) => {
 // delete an order
 
 export const deleteOrder = (req, res) => {
-  Order.remove({ _id: req.params.order_id }, (err, data) => {
+  Order.remove({ _id: req.params.order_id }, (err, order) => {
     if (err) {
       res.status(404).json({ 
         error: "Order not found. Check order id."
