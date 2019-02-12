@@ -32,7 +32,7 @@ export const getAllMerchantRecords = (req, res) => {
 
 
 
-// router.get('/api/v1/orders/merchant/:merchant_id', loginRequired, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBY
+// router.get('/api/v1/orders/merchant/:merchant_id', loginRequired, getAllMerchantOrders) // get all orders by merchant PRIVATE - find by _createdBYsdsdfasdf
 
 export const getAllMerchantOrders = (req, res) => {
   const limit = parseInt(req.query.limit)
